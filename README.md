@@ -70,7 +70,7 @@ O comando produz o SVG a partir do DOT. A distribuição visual pode variar com 
 
 ## Situação atual
 
-As Etapas 0, 1 e 2 estão integradas à branch principal. A Etapa 3 implementa o diretório estático e aguarda auditoria e integração. A ontologia OWL, os dados RDF, as consultas SPARQL, as ligações externas LOD e a publicação do site estão previstas para etapas posteriores. Consulte os [requisitos](proposta/requisitos.md) e a [declaração de uso de IA](documentacao/uso-ia.md).
+As Etapas 0, 1, 2 e 3 estão integradas à branch principal. O diretório estático e seus quatro perfis foram implementados e o código está disponível neste repositório. A ontologia OWL, os dados RDF, as consultas SPARQL, as ligações externas LOD e a hospedagem pública do site permanecem para as próximas etapas. Consulte os [requisitos](proposta/requisitos.md) e a [declaração de uso de IA](documentacao/uso-ia.md).
 
 ## Integrantes
 

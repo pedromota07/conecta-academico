@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Ambientes virtuais e configuração local
+.venv/
+venv/
+.env
+.env.*
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Arquivos temporários e do sistema
+*.log
+*.tmp
+*.bak
+*.swp
+*~
+.DS_Store
+Thumbs.db

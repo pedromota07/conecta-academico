@@ -21,3 +21,13 @@ O grupo deve revisar este registro e acrescentar o uso de IA das próximas etapa
 **Partes preparadas com auxílio da ferramenta** — `proposta/escopo.md`, `proposta/perguntas-competencia.md`, `proposta/rastreabilidade.md` e `documentacao/pesquisa-vocabularios.md`. A ferramenta também auxiliou na criação da branch de trabalho e nesta declaração.
 
 **Verificações realizadas** — O enunciado de quatro páginas, os modelos HTML/CSS e a atividade sobre ontologias do slide 50 foram consultados. Os termos comparados foram conferidos nas especificações ou nos arquivos publicados pelos projetos. A rastreabilidade foi revisada com os requisitos da Etapa 0 e os campos e relações propostos foram cruzados com as seis perguntas. Foram conferidos os links internos e a formatação dos quatro documentos. Os cenários de aceitação descrevem verificações previstas para a implementação.
+
+## Etapa 2
+
+**Ferramenta e finalidade** — OpenAI Codex para propor e documentar o modelo conceitual, o dicionário, as decisões para OWL, o diagrama e os exemplos conceituais. A busca na Web apoiou a conferência de especificações oficiais de OWL, Schema.org, AIISO, DCMI e SKOS.
+
+**Síntese da solicitação** — Especificar entidades, identificadores, relações e cardinalidades, admitir múltiplos papéis acadêmicos para a mesma pessoa e demonstrar a cobertura de PC1–PC6 em termos conceituais.
+
+**Partes afetadas** — Dicionário de dados, decisões de modelagem, fonte editável e imagem do diagrama, referências da matriz de rastreabilidade e esta entrada da declaração.
+
+**Verificações realizadas** — Foram consultados o enunciado e os documentos aprovados. Foram cruzadas as entidades, as relações e as multiplicidades do diagrama, do dicionário e das decisões. O SVG foi renderizado a partir da fonte editável e inspecionado visualmente. Os caminhos de PC1–PC6 foram conferidos com exemplos fictícios abstratos, incluindo o tratamento de uma pessoa com dois papéis. A verificação foi conceitual.

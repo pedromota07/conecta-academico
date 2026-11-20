@@ -1,0 +1,69 @@
+digraph ConectaAcademico {
+  graph [rankdir=LR, label=<
+      <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3">
+        <TR><TD ALIGN="LEFT"><FONT POINT-SIZE="25"><B>ConectaAcadêmico | Modelo conceitual</B></FONT></TD></TR>
+        <TR><TD ALIGN="LEFT"><FONT POINT-SIZE="11">Multiplicidades na ordem origem → destino. Cada ponta é lida por instância da outra.</FONT></TD></TR>
+        <TR><TD ALIGN="LEFT"><FONT POINT-SIZE="11">Triângulo vazado indica especialização. Caixas repetidas representam o mesmo tipo.</FONT></TD></TR>
+      </TABLE>
+    >, labelloc=t,
+    labeljust=l, fontname="Arial", fontsize=25, fontcolor="#15233c",
+    bgcolor="#ffffff", pad=0.25, margin=0, nodesep=0.61, ranksep=0.96];
+  node [shape=box, style="rounded,filled", color="#607590", penwidth=1.15,
+    fontname="Arial", fontsize=15, fontcolor="#15233c", margin="0.17,0.12"];
+  edge [color="#496078", fontcolor="#263a55", fontname="Arial", fontsize=11,
+    penwidth=1.15, arrowsize=0.68];
+
+  subgraph cluster_pesquisa {
+    graph [label="Pesquisa e produção", fontsize=17, fontname="Arial",
+      margin=20, style="rounded,filled", color="#d2deea", fillcolor="#f6f9fc"];
+    pesquisa_pessoa [label="Pessoa", fillcolor="#e0f2fe"];
+    pesquisa_projeto [label="Projeto de pesquisa", fillcolor="#dcf5ee"];
+    pesquisa_grupo [label="Grupo de pesquisa", fillcolor="#dcf5ee"];
+    pesquisa_publicacao [label="Publicação", fillcolor="#dcf5ee"];
+
+
+    pesquisa_projeto -> pesquisa_pessoa [label="R12 · Participação\n0..* → 1..*"];
+    pesquisa_grupo -> pesquisa_pessoa [label="R13 · Pertencimento ao grupo\n0..* → 1..*"];
+    pesquisa_grupo -> pesquisa_projeto [label="R14 · Associação com projeto\n0..* → 0..*"];
+    pesquisa_publicacao -> pesquisa_pessoa [label="R15 · Autoria\n0..* → 0..*"];
+  }
+
+  subgraph cluster_curriculo {
+    graph [label="Currículo e áreas de conhecimento", fontsize=17, fontname="Arial",
+      margin=20, style="rounded,filled", color="#d2deea", fillcolor="#f6f9fc"];
+    curriculo_docente [label="Docente", fillcolor="#e0f2fe"];
+    curriculo_discente [label="Discente", fillcolor="#e0f2fe"];
+    curriculo_curso [label="Curso de graduação", fillcolor="#eceafe"];
+    curriculo_disciplina [label="Disciplina", fillcolor="#eceafe"];
+    curriculo_area [label="Área de conhecimento", fillcolor="#dcf5ee"];
+
+
+    curriculo_curso -> curriculo_disciplina [label="R06 · Disciplina no currículo\n0..* → 0..*"];
+    curriculo_docente -> curriculo_disciplina [label="R07 · Ministra disciplina\n0..* → 0..*"];
+    curriculo_discente -> curriculo_disciplina [label="R08 · Cursa ou cursou\n0..* → 0..*"];
+    curriculo_docente -> curriculo_area [label="R09 · Atuação em área\n0..* → 0..*"];
+    curriculo_discente -> curriculo_area [label="R10 · Interesse em área\n0..* → 0..*"];
+    curriculo_area -> curriculo_area [label="R11 · Área mais ampla\n0..* → 0..*"];
+  }
+
+  subgraph cluster_institucional {
+    graph [label="Identidade e vínculos institucionais", fontsize=17, fontname="Arial",
+      margin=20, style="rounded,filled", color="#d2deea", fillcolor="#f6f9fc"];
+    institucional_pessoa [label="Pessoa", fillcolor="#e0f2fe"];
+    institucional_docente [label="Docente", fillcolor="#e0f2fe"];
+    institucional_discente [label="Discente", fillcolor="#e0f2fe"];
+    institucional_unidade [label="Unidade acadêmica", fillcolor="#eceafe"];
+    institucional_departamento [label="Departamento", fillcolor="#eceafe"];
+    institucional_curso [label="Curso de graduação", fillcolor="#eceafe"];
+
+    institucional_docente -> institucional_pessoa [arrowhead=empty, color="#687f9c"];
+    institucional_discente -> institucional_pessoa [arrowhead=empty, color="#687f9c"];
+    institucional_departamento -> institucional_unidade [arrowhead=empty, color="#687f9c"];
+
+    institucional_docente -> institucional_unidade [label="R01 · Vínculo docente\n0..* → 1..*"];
+    institucional_discente -> institucional_unidade [label="R02 · Vínculo discente\n0..* → 1..*"];
+    institucional_discente -> institucional_curso [label="R03 · Matrícula\n0..* → 1..*"];
+    institucional_curso -> institucional_unidade [label="R04 · Unidade responsável\n0..* → 1"];
+    institucional_unidade -> institucional_unidade [label="R05 · Unidade superior\n0..* → 0..1"];
+  }
+}

@@ -1,4 +1,4 @@
-# Perfis acadêmicos na Web Semântica
+# ConectaAcadêmico — Diretório Semântico de Perfis Universitários
 
 Trabalho final da disciplina Web Semântica da Universidade Federal Rural do Rio de Janeiro (UFRRJ), ministrada pelo professor Tiago Cruz de França.
 
@@ -30,9 +30,22 @@ O grupo ainda vai definir o formato da fonte estruturada, a tecnologia de geraç
 
 O Git passará a representar os diretórios vazios quando eles receberem arquivos versionados.
 
+## Modelo conceitual e reprodução do diagrama
+
+A modelagem da Etapa 2 está documentada no [dicionário de dados](documentacao/dicionario-dados.md) e nas [decisões de modelagem](documentacao/decisoes-modelagem.md). O [diagrama SVG](documentacao/diagrama-conceitual.svg) tem como fonte editável o arquivo [Graphviz DOT](documentacao/diagrama-conceitual.dot).
+
+Para regenerar a imagem, instale o [Graphviz](https://graphviz.org/download/), disponibilize o executável `dot` no `PATH` e execute, na raiz do repositório, no PowerShell:
+
+```powershell
+dot -V
+dot -Tsvg "documentacao/diagrama-conceitual.dot" -o "documentacao/diagrama-conceitual.svg"
+```
+
+O comando produz o SVG a partir do DOT. A distribuição visual pode variar com a versão e as fontes disponíveis; após regenerar, confira a legibilidade, as 15 relações (R01–R15) e as multiplicidades. O SVG versionado também possui atributos de acessibilidade e descrição textual (`role`, `aria-labelledby`, `title` e `desc`), que podem precisar ser reaplicados à saída do Graphviz. A ferramenta não estava instalada no terminal utilizado na auditoria da Etapa 2; portanto, a regeneração por esse comando ainda não foi executada nesse ambiente.
+
 ## Situação atual
 
-Etapa 0. O repositório local está preparado para revisão inicial, com os [requisitos do trabalho](proposta/requisitos.md) e a [declaração de uso de IA](documentacao/uso-ia.md). A implementação e a publicação estão previstas para as próximas etapas.
+As Etapas 0, 1 e 2 foram concluídas. A pesquisa, o modelo conceitual, o dicionário de dados e o diagrama estão disponíveis no repositório. O desenvolvimento do site, a ontologia executável, os dados RDF, as consultas SPARQL e a publicação do site permanecem para as próximas etapas. Consulte os [requisitos](proposta/requisitos.md) e a [declaração de uso de IA](documentacao/uso-ia.md).
 
 ## Integrantes
 
@@ -42,6 +55,6 @@ Etapa 0. O repositório local está preparado para revisão inicial, com os [req
 
 ## Colaboração
 
-1. Depois de configurar o repositório remoto, cada integrante parte da `main` atualizada e cria uma branch por tarefa.
+1. Cada integrante parte da `main` atualizada e cria uma branch por tarefa.
 2. Ao abrir um Pull Request para `main`, descreva a mudança e as verificações realizadas. Peça revisão a pelo menos um dos outros dois integrantes.
 3. Incorpore a contribuição após a revisão e atualize a `main` local antes de iniciar outra tarefa.

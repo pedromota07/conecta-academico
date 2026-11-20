@@ -31,3 +31,15 @@ O grupo deve revisar este registro e acrescentar o uso de IA das próximas etapa
 **Partes afetadas** — Dicionário de dados, decisões de modelagem, fonte editável e imagem do diagrama, referências da matriz de rastreabilidade e esta entrada da declaração.
 
 **Verificações realizadas** — Foram consultados o enunciado e os documentos aprovados. Foram cruzadas as entidades, as relações e as multiplicidades do diagrama, do dicionário e das decisões. O SVG foi renderizado a partir da fonte editável e inspecionado visualmente. Os caminhos de PC1–PC6 foram conferidos com exemplos fictícios abstratos, incluindo o tratamento de uma pessoa com dois papéis. A verificação foi conceitual.
+
+## Etapa 3
+
+**Ferramenta e finalidade** — OpenAI Codex, com assistência delegada para preparar a fonte JSON e o validador, adaptar a apresentação dos perfis aos modelos do professor e criar os testes. A ferramenta também auxiliou na implementação do gerador e na revisão da documentação.
+
+**Síntese da solicitação** — Implementar um diretório acadêmico fictício em HTML e CSS, gerado a partir de uma única fonte JSON, seguindo a modelagem aprovada e usando quatro perfis com dados suficientes para PC1–PC6.
+
+**Partes afetadas** — Dados em `exemplos/perfis/`, gerador, validador, templates e estilos em `codigo-fonte/`, testes automatizados, saída estática em `docs/`, README e esta entrada.
+
+**Verificações realizadas** — Os arquivos HTML e CSS do professor foram consultados no ZIP original. A geração local e os testes automatizados verificaram as páginas, os vínculos, as referências internas, o escape de conteúdo, os cenários PC1–PC6 e a inclusão isolada de um quinto perfil. O quinto registro de teste exerceu os dois papéis com o mesmo identificador. No Chrome, foram conferidos os links, a navegação por teclado e a responsividade em desktop e em telas estreitas.
+
+**Auditoria final** — Na raiz do repositório, `python -B codigo-fonte/gerar_site.py` gerou seis arquivos, que coincidiram byte a byte com a segunda geração em um diretório temporário. `python -B -m unittest discover -s testes -v` executou 23 testes com sucesso. A navegação no Chrome foi verificada em 1440, 390 e 320 px, diretamente pelos arquivos e por HTTP local em um subdiretório. `git diff --check` e a checagem complementar dos arquivos novos passaram.

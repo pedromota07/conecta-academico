@@ -1,0 +1,204 @@
+{
+  "instituicaoReferencia": "Universidade Exemplo",
+  "fontes": [
+    "Os perfis de Ana e João foram adaptados dos modelos fictícios do professor Tiago Cruz de França para a disciplina Web Semântica da UFRRJ. Os demais perfis e as relações entre registros foram elaborados para esta demonstração."
+  ],
+  "pessoas": [
+    {
+      "id": "pessoa-ana",
+      "nome": "Ana Exemplo da Silva",
+      "apresentacao": "Ensino Computação e pesquiso formas de organizar, publicar e interligar dados acadêmicos. Meus projetos combinam Web Semântica e engenharia de conhecimento para facilitar o acesso à informação científica.",
+      "formacao": [
+        "Doutorado em Ciência da Computação, 2018",
+        "Mestrado em Informática, 2012",
+        "Graduação em Sistemas de Informação, 2009"
+      ],
+      "docencia": {
+        "cargo": "Professora associada",
+        "unidadesDocentes": ["unidade-computacao"],
+        "areasAtuacao": ["area-dados-abertos", "area-web-semantica"],
+        "disciplinasMinistradas": ["disciplina-web-semantica", "disciplina-banco-dados"]
+      }
+    },
+    {
+      "id": "pessoa-rafael",
+      "nome": "Rafael Exemplo Duarte",
+      "apresentacao": "Pesquiso práticas de curadoria para acervos digitais. Em sala, trabalho com organização da informação e ajudo estudantes a descrever coleções que possam ser consultadas e preservadas ao longo do tempo.",
+      "formacao": [
+        "Doutorado em Ciência da Informação, 2019",
+        "Mestrado em Memória Social, 2013",
+        "Graduação em Biblioteconomia, 2010"
+      ],
+      "docencia": {
+        "cargo": "Professor adjunto",
+        "unidadesDocentes": ["unidade-gestao-informacao"],
+        "areasAtuacao": ["area-curadoria-digital"],
+        "disciplinasMinistradas": ["disciplina-curadoria-digital", "disciplina-organizacao-informacao"]
+      }
+    },
+    {
+      "id": "pessoa-joao",
+      "nome": "João Exemplo Pereira",
+      "apresentacao": "Estudo desenvolvimento web e organização de dados. Participo de um projeto em que transformamos informações acadêmicas em catálogos que podem ser consultados e reaproveitados.",
+      "formacao": ["Graduação em andamento, ingresso em 2024"],
+      "discencia": {
+        "unidadesDiscentes": ["unidade-computacao"],
+        "cursos": ["curso-sistemas-informacao"],
+        "areasInteresse": ["area-dados-abertos", "area-desenvolvimento-web"],
+        "disciplinasCursadas": ["disciplina-web-semantica", "disciplina-banco-dados"]
+      }
+    },
+    {
+      "id": "pessoa-clara",
+      "nome": "Clara Exemplo Nunes",
+      "apresentacao": "Estudo como descrever e preservar coleções digitais. No laboratório, elaboro registros de catalogação e avalio se os termos escolhidos ajudam outras pessoas a encontrar materiais no acervo.",
+      "formacao": ["Graduação em andamento, ingresso em 2025"],
+      "discencia": {
+        "unidadesDiscentes": ["unidade-gestao-informacao"],
+        "cursos": ["curso-biblioteconomia"],
+        "areasInteresse": ["area-curadoria-digital", "area-gestao-informacao"],
+        "disciplinasCursadas": ["disciplina-organizacao-informacao"]
+      }
+    }
+  ],
+  "unidades": [
+    {
+      "id": "unidade-ciencias-exatas",
+      "nome": "Instituto de Ciências Exatas",
+      "tipoUnidade": "instituto"
+    },
+    {
+      "id": "unidade-ciencias-informacao",
+      "nome": "Instituto de Ciências da Informação",
+      "tipoUnidade": "instituto"
+    },
+    {
+      "id": "unidade-computacao",
+      "nome": "Departamento de Computação",
+      "tipoUnidade": "departamento",
+      "unidadeSuperior": "unidade-ciencias-exatas"
+    },
+    {
+      "id": "unidade-gestao-informacao",
+      "nome": "Departamento de Gestão da Informação",
+      "tipoUnidade": "departamento",
+      "unidadeSuperior": "unidade-ciencias-informacao"
+    }
+  ],
+  "cursos": [
+    {
+      "id": "curso-sistemas-informacao",
+      "nome": "Bacharelado em Sistemas de Informação",
+      "unidadeResponsavel": "unidade-computacao",
+      "disciplinas": ["disciplina-web-semantica", "disciplina-banco-dados"]
+    },
+    {
+      "id": "curso-biblioteconomia",
+      "nome": "Bacharelado em Biblioteconomia",
+      "unidadeResponsavel": "unidade-gestao-informacao",
+      "disciplinas": ["disciplina-curadoria-digital", "disciplina-organizacao-informacao"]
+    }
+  ],
+  "disciplinas": [
+    {"id": "disciplina-web-semantica", "nome": "Web Semântica"},
+    {"id": "disciplina-banco-dados", "nome": "Banco de Dados"},
+    {"id": "disciplina-curadoria-digital", "nome": "Curadoria Digital"},
+    {"id": "disciplina-organizacao-informacao", "nome": "Organização da Informação"}
+  ],
+  "areas": [
+    {
+      "id": "area-gestao-informacao",
+      "rotuloPreferido": "Gestão da informação",
+      "definicao": "Organização e uso da informação ao longo de seu ciclo de vida."
+    },
+    {
+      "id": "area-dados-abertos",
+      "rotuloPreferido": "Dados abertos",
+      "definicao": "Publicação de dados com condições que permitem acesso, uso e reutilização.",
+      "areasMaisAmplas": ["area-gestao-informacao"]
+    },
+    {
+      "id": "area-web-semantica",
+      "rotuloPreferido": "Web Semântica",
+      "definicao": "Representação e interligação de informações na Web com significado explícito."
+    },
+    {
+      "id": "area-curadoria-digital",
+      "rotuloPreferido": "Curadoria digital",
+      "definicao": "Seleção, documentação e preservação de recursos digitais ao longo do tempo.",
+      "rotulosAlternativos": ["Curadoria de recursos digitais"],
+      "areasMaisAmplas": ["area-gestao-informacao"]
+    },
+    {
+      "id": "area-desenvolvimento-web",
+      "rotuloPreferido": "Desenvolvimento web",
+      "definicao": "Construção de recursos e aplicações usados por meio da Web."
+    }
+  ],
+  "projetos": [
+    {
+      "id": "projeto-dados-abertos",
+      "titulo": "Catálogo acadêmico de dados abertos",
+      "descricao": "Organiza e interliga dados de um diretório acadêmico para permitir análises e reutilização.",
+      "participantes": ["pessoa-ana", "pessoa-joao"]
+    },
+    {
+      "id": "projeto-curadoria-digital",
+      "titulo": "Curadoria de acervos digitais",
+      "descricao": "Sistematiza critérios para selecionar, descrever e preservar coleções de ensino.",
+      "participantes": ["pessoa-rafael"]
+    },
+    {
+      "id": "projeto-acervos-digitais",
+      "titulo": "Curadoria de acervos digitais para ensino",
+      "descricao": "Avalia a recuperação de uma coleção didática piloto por meio de termos de assunto.",
+      "participantes": ["pessoa-clara"]
+    }
+  ],
+  "grupos": [
+    {
+      "id": "grupo-dados-publicos",
+      "nome": "Grupo de Dados Públicos e Conhecimento",
+      "linhaAtuacao": "Interoperabilidade e publicação de dados acadêmicos.",
+      "membros": ["pessoa-ana", "pessoa-joao"],
+      "projetos": ["projeto-dados-abertos"]
+    },
+    {
+      "id": "grupo-memoria-digital",
+      "nome": "Grupo de Estudos de Memória Digital",
+      "linhaAtuacao": "Descrição e preservação de coleções digitais.",
+      "membros": ["pessoa-rafael", "pessoa-clara"],
+      "projetos": ["projeto-curadoria-digital", "projeto-acervos-digitais"]
+    }
+  ],
+  "publicacoes": [
+    {
+      "id": "publicacao-dados-conectados",
+      "titulo": "Dados conectados para descrever coleções universitárias",
+      "tipoProducao": "artigo",
+      "anoPublicacao": 2024,
+      "autores": ["pessoa-ana", "pessoa-rafael"]
+    },
+    {
+      "id": "publicacao-representacao-conhecimento",
+      "titulo": "Representação do conhecimento em diretórios acadêmicos",
+      "tipoProducao": "artigo",
+      "anoPublicacao": 2022,
+      "autores": ["pessoa-ana"]
+    },
+    {
+      "id": "publicacao-prototipo-catalogo",
+      "titulo": "Protótipo de catálogo para dados acadêmicos",
+      "tipoProducao": "trabalho-academico",
+      "anoPublicacao": 2025,
+      "autores": ["pessoa-joao"]
+    },
+    {
+      "id": "publicacao-descricao-acervo",
+      "titulo": "Descrição temática de uma coleção didática digital",
+      "tipoProducao": "trabalho-academico",
+      "anoPublicacao": 2026,
+      "autores": ["pessoa-clara"]
+    }
+  ]
+}

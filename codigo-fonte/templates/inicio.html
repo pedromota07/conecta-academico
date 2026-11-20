@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Diretório demonstrativo de perfis acadêmicos de docentes e discentes.">
+  <title>ConectaAcadêmico | Diretório de perfis</title>
+  <link rel="stylesheet" href="${raiz}assets/estilos.css">
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="site-header">
+    <div class="header-inner shell">
+      <a class="site-title" href="${raiz}index.html">
+        <span class="brand-mark" aria-hidden="true"></span>ConectaAcadêmico
+      </a>
+      <nav aria-label="Navegação principal">
+        <a class="nav-link" href="#perfis">Ver perfis</a>
+      </nav>
+    </div>
+  </header>
+  <main class="shell directory-main" id="conteudo" tabindex="-1">
+    <section class="hero" aria-labelledby="titulo">
+      <div class="hero-content">
+        <p class="hero-context">Web Semântica · UFRRJ</p>
+        <h1 id="titulo">Diretório acadêmico</h1>
+        <p>Explore a formação, os projetos e a produção acadêmica dos perfis da ${instituicao}.</p>
+        <p class="demo-note"><span aria-hidden="true"></span>Demonstração acadêmica com dados fictícios</p>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <span class="orbit orbit-outer"></span>
+        <span class="orbit orbit-inner"></span>
+        <span class="orbit orbit-cross"></span>
+        <span class="node node-main"></span>
+        <span class="node node-top"></span>
+        <span class="node node-side"></span>
+        <span class="node node-bottom"></span>
+      </div>
+    </section>
+    <section class="directory" aria-labelledby="perfis">
+      <h2 id="perfis">Perfis</h2>
+      <ul class="profile-grid" role="list">
+${lista_perfis}
+      </ul>
+    </section>
+  </main>
+  <footer class="site-footer shell">
+    <strong>ConectaAcadêmico</strong>
+    <span>Trabalho de Web Semântica · UFRRJ</span>
+  </footer>
+</body>
+</html>

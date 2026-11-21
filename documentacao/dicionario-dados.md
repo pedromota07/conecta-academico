@@ -77,6 +77,20 @@ Conceito de vocabulário controlado que pode qualificar uma atuação docente ou
 | `rotuloPreferido` | Texto em português | Obrigatório · 1 | Termo principal. Ex. `Dados Abertos`. |
 | `definicao` | Texto | Obrigatório · 1 | Definição que distingue o conceito no vocabulário. |
 | `rotulosAlternativos` | Lista de textos em português | Opcional · 0..* | Variantes distintas entre si e do rótulo preferido do mesmo conceito. |
+| `correspondenciasExternas` | Lista de objetos | Opcional · 0..* | Ligações do conceito local com conceitos de outros vocabulários (LOD). Cada recurso externo aparece uma única vez por área. Campos na tabela abaixo. |
+
+Campos de cada item de `correspondenciasExternas` (todos obrigatórios; outros campos são rejeitados):
+
+| Campo | Tipo | Regra |
+| --- | --- | --- |
+| `uri` | URI HTTP ou HTTPS | Identificador da entidade externa na forma canônica publicada pela fonte (ex. `http://www.wikidata.org/entity/Q54837`). Não pode estar no namespace do projeto. |
+| `predicado` | Texto controlado | `skos:exactMatch`, `skos:closeMatch`, `skos:broadMatch`, `skos:narrowMatch` ou `skos:relatedMatch`. A mesma URI não pode ser `skos:exactMatch` de duas áreas distintas. |
+| `rotulo` | Texto | Rótulo do recurso externo, para leitura. |
+| `fonte` | URL HTTPS | Página consultada para conferir o recurso, distinta da URI da entidade. |
+| `dataVerificacao` | Data ISO 8601 | Dia em que a correspondência foi conferida. |
+| `justificativa` | Texto | Razão semântica do predicado escolhido. |
+
+No RDF, cada item gera uma tripla `área → predicado SKOS → URI externa`. Ver [ligações externas](ligacoes-externas.md).
 
 ### ProjetoPesquisa
 

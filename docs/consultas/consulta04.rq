@@ -1,0 +1,28 @@
+# PC4 — Quais docentes e discentes participam de um mesmo projeto de pesquisa?
+#
+# Parâmetros: nenhum. A consulta lista todos os pares docente/discente por projeto.
+# Percurso (relação entre tipos de entidade):
+#   ?projeto (ca:ProjetoPesquisa) --ca:temParticipante--> ?docente  (ca:Docente)
+#   ?projeto (ca:ProjetoPesquisa) --ca:temParticipante--> ?discente (ca:Discente)
+# As duas participações se cruzam pela mesma URI de projeto, portanto projetos
+# com títulos iguais continuam distintos. O FILTER exige duas pessoas
+# diferentes: quem acumula os dois papéis não forma um par sozinho.
+# A associação de um grupo ao projeto (ca:associadoAoProjeto) não é usada,
+# pois não comprova participação individual.
+
+PREFIX ca:      <https://pedromota07.github.io/conecta-academico/ontologia/conecta-academico.ttl#>
+PREFIX schema:  <https://schema.org/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+
+SELECT ?projeto ?tituloProjeto ?docente ?nomeDocente ?discente ?nomeDiscente
+WHERE {
+  ?projeto a ca:ProjetoPesquisa ;
+           dcterms:title ?tituloProjeto ;
+           ca:temParticipante ?docente , ?discente .
+  ?docente a ca:Docente ;
+           schema:name ?nomeDocente .
+  ?discente a ca:Discente ;
+            schema:name ?nomeDiscente .
+  FILTER (?docente != ?discente)
+}
+ORDER BY ?tituloProjeto ?projeto ?nomeDocente ?docente ?nomeDiscente ?discente

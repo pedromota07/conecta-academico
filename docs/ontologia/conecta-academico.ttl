@@ -30,6 +30,13 @@ schema:author a owl:ObjectProperty .
 aiiso:part_of a owl:ObjectProperty .
 skos:broader a owl:ObjectProperty .
 
+# Relações de mapeamento SKOS aceitas pelo gerador para ligar áreas locais a conceitos externos.
+skos:exactMatch a owl:ObjectProperty .
+skos:closeMatch a owl:ObjectProperty .
+skos:broadMatch a owl:ObjectProperty .
+skos:narrowMatch a owl:ObjectProperty .
+skos:relatedMatch a owl:ObjectProperty .
+
 # Classes do diretório
 
 ca:Pessoa

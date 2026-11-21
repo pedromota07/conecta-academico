@@ -1,0 +1,19 @@
+# PC1 — Quais são os docentes cadastrados e seus respectivos departamentos
+# ou unidades acadêmicas?
+#
+# Parâmetros: nenhum. A consulta lista todos os docentes do grafo.
+# Percurso: ?docente (ca:Docente) --ca:temVinculoDocente--> ?unidade.
+# Pessoas apenas discentes ficam fora porque o padrão exige o tipo ca:Docente
+# e o vínculo docente; o vínculo discente (ca:temVinculoDiscente) não é usado.
+
+PREFIX ca:     <https://pedromota07.github.io/conecta-academico/ontologia/conecta-academico.ttl#>
+PREFIX schema: <https://schema.org/>
+
+SELECT ?docente ?nomeDocente ?unidade ?nomeUnidade
+WHERE {
+  ?docente a ca:Docente ;
+           schema:name ?nomeDocente ;
+           ca:temVinculoDocente ?unidade .
+  ?unidade schema:name ?nomeUnidade .
+}
+ORDER BY ?nomeDocente ?docente ?nomeUnidade ?unidade

@@ -1,0 +1,34 @@
+{
+  "head": {
+    "vars": [
+      "area",
+      "rotuloArea",
+      "docente",
+      "nomeDocente"
+    ]
+  },
+  "results": {
+    "bindings": [
+      {
+        "area": {
+          "type": "uri",
+          "value": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#area-curadoria-digital"
+        },
+        "rotuloArea": {
+          "type": "literal",
+          "value": "Curadoria digital",
+          "xml:lang": "pt-BR"
+        },
+        "docente": {
+          "type": "uri",
+          "value": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#pessoa-rafael"
+        },
+        "nomeDocente": {
+          "type": "literal",
+          "value": "Rafael Duarte",
+          "xml:lang": "pt-BR"
+        }
+      }
+    ]
+  }
+}

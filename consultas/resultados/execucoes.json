@@ -1,0 +1,122 @@
+{
+  "grafo": "ontologia/instancias.ttl",
+  "motor": "RDFLib Graph.query() com initBindings",
+  "observacao": "Execução local sobre o conjunto de demonstração; não é um endpoint público.",
+  "execucoes": [
+    {
+      "consulta": "consulta01",
+      "arquivo": "consultas/consulta01.rq",
+      "pergunta": "Quais são os docentes cadastrados e seus respectivos departamentos ou unidades acadêmicas?",
+      "parametros": {},
+      "resultado": "consulta01.json",
+      "linhas": 2
+    },
+    {
+      "consulta": "consulta02",
+      "arquivo": "consultas/consulta02.rq",
+      "pergunta": "Quais discentes pertencem a determinado curso?",
+      "parametros": {
+        "curso": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#curso-sistemas-informacao"
+      },
+      "resultado": "consulta02--curso-sistemas-informacao.json",
+      "linhas": 1
+    },
+    {
+      "consulta": "consulta02",
+      "arquivo": "consultas/consulta02.rq",
+      "pergunta": "Quais discentes pertencem a determinado curso?",
+      "parametros": {
+        "curso": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#curso-biblioteconomia"
+      },
+      "resultado": "consulta02--curso-biblioteconomia.json",
+      "linhas": 1
+    },
+    {
+      "consulta": "consulta03",
+      "arquivo": "consultas/consulta03.rq",
+      "pergunta": "Quais docentes atuam em determinada área de pesquisa?",
+      "parametros": {
+        "area": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#area-dados-abertos"
+      },
+      "resultado": "consulta03--area-dados-abertos.json",
+      "linhas": 1
+    },
+    {
+      "consulta": "consulta03",
+      "arquivo": "consultas/consulta03.rq",
+      "pergunta": "Quais docentes atuam em determinada área de pesquisa?",
+      "parametros": {
+        "area": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#area-curadoria-digital"
+      },
+      "resultado": "consulta03--area-curadoria-digital.json",
+      "linhas": 1
+    },
+    {
+      "consulta": "consulta04",
+      "arquivo": "consultas/consulta04.rq",
+      "pergunta": "Quais docentes e discentes participam de um mesmo projeto de pesquisa?",
+      "parametros": {},
+      "resultado": "consulta04.json",
+      "linhas": 1
+    },
+    {
+      "consulta": "consulta05",
+      "arquivo": "consultas/consulta05.rq",
+      "pergunta": "Quais publicações estão associadas a determinado docente e quem são seus coautores, quando essa informação estiver representada?",
+      "parametros": {
+        "docente": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#pessoa-ana"
+      },
+      "resultado": "consulta05--pessoa-ana.json",
+      "linhas": 2
+    },
+    {
+      "consulta": "consulta05",
+      "arquivo": "consultas/consulta05.rq",
+      "pergunta": "Quais publicações estão associadas a determinado docente e quem são seus coautores, quando essa informação estiver representada?",
+      "parametros": {
+        "docente": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#pessoa-rafael"
+      },
+      "resultado": "consulta05--pessoa-rafael.json",
+      "linhas": 1
+    },
+    {
+      "consulta": "consulta06",
+      "arquivo": "consultas/consulta06.rq",
+      "pergunta": "Quais pessoas estão vinculadas a uma unidade acadêmica específica, independentemente de serem docentes ou discentes?",
+      "parametros": {
+        "unidade": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#unidade-computacao"
+      },
+      "resultado": "consulta06--unidade-computacao.json",
+      "linhas": 2
+    },
+    {
+      "consulta": "consulta06",
+      "arquivo": "consultas/consulta06.rq",
+      "pergunta": "Quais pessoas estão vinculadas a uma unidade acadêmica específica, independentemente de serem docentes ou discentes?",
+      "parametros": {
+        "unidade": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#unidade-gestao-informacao"
+      },
+      "resultado": "consulta06--unidade-gestao-informacao.json",
+      "linhas": 2
+    },
+    {
+      "consulta": "consulta06",
+      "arquivo": "consultas/consulta06.rq",
+      "pergunta": "Quais pessoas estão vinculadas a uma unidade acadêmica específica, independentemente de serem docentes ou discentes?",
+      "parametros": {
+        "unidade": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#unidade-ciencias-exatas"
+      },
+      "resultado": "consulta06--unidade-ciencias-exatas.json",
+      "linhas": 0
+    },
+    {
+      "consulta": "ligacoes-externas",
+      "arquivo": "consultas/ligacoes-externas.rq",
+      "pergunta": "Quais áreas locais estão ligadas a recursos externos e por qual relação de mapeamento SKOS?",
+      "parametros": {},
+      "resultado": "ligacoes-externas.json",
+      "linhas": 3,
+      "complementar": true
+    }
+  ]
+}

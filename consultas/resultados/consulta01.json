@@ -1,0 +1,54 @@
+{
+  "head": {
+    "vars": [
+      "docente",
+      "nomeDocente",
+      "unidade",
+      "nomeUnidade"
+    ]
+  },
+  "results": {
+    "bindings": [
+      {
+        "docente": {
+          "type": "uri",
+          "value": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#pessoa-ana"
+        },
+        "nomeDocente": {
+          "type": "literal",
+          "value": "Ana Silva",
+          "xml:lang": "pt-BR"
+        },
+        "unidade": {
+          "type": "uri",
+          "value": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#unidade-computacao"
+        },
+        "nomeUnidade": {
+          "type": "literal",
+          "value": "Departamento de Computação",
+          "xml:lang": "pt-BR"
+        }
+      },
+      {
+        "docente": {
+          "type": "uri",
+          "value": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#pessoa-rafael"
+        },
+        "nomeDocente": {
+          "type": "literal",
+          "value": "Rafael Duarte",
+          "xml:lang": "pt-BR"
+        },
+        "unidade": {
+          "type": "uri",
+          "value": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#unidade-gestao-informacao"
+        },
+        "nomeUnidade": {
+          "type": "literal",
+          "value": "Departamento de Gestão da Informação",
+          "xml:lang": "pt-BR"
+        }
+      }
+    ]
+  }
+}

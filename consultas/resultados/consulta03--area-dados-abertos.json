@@ -1,0 +1,34 @@
+{
+  "head": {
+    "vars": [
+      "area",
+      "rotuloArea",
+      "docente",
+      "nomeDocente"
+    ]
+  },
+  "results": {
+    "bindings": [
+      {
+        "area": {
+          "type": "uri",
+          "value": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#area-dados-abertos"
+        },
+        "rotuloArea": {
+          "type": "literal",
+          "value": "Dados abertos",
+          "xml:lang": "pt-BR"
+        },
+        "docente": {
+          "type": "uri",
+          "value": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#pessoa-ana"
+        },
+        "nomeDocente": {
+          "type": "literal",
+          "value": "Ana Silva",
+          "xml:lang": "pt-BR"
+        }
+      }
+    ]
+  }
+}

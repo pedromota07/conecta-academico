@@ -1,0 +1,21 @@
+# Consulta complementar (não é uma das seis perguntas de competência).
+# Lista as ligações das áreas locais com recursos externos (LOD).
+#
+# Parâmetros: nenhum.
+# Percurso: ?area (ca:AreaConhecimento) --?relacao--> ?recursoExterno, onde
+# ?relacao é uma das relações de mapeamento SKOS. O FILTER descarta alvos
+# dentro do namespace do próprio projeto.
+
+PREFIX ca:   <https://pedromota07.github.io/conecta-academico/ontologia/conecta-academico.ttl#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?area ?rotuloArea ?relacao ?recursoExterno
+WHERE {
+  VALUES ?relacao { skos:exactMatch skos:closeMatch skos:broadMatch skos:narrowMatch skos:relatedMatch }
+  ?area a ca:AreaConhecimento ;
+        skos:prefLabel ?rotuloArea ;
+        ?relacao ?recursoExterno .
+  FILTER (isIRI(?recursoExterno)
+          && !STRSTARTS(STR(?recursoExterno), "https://pedromota07.github.io/conecta-academico/"))
+}
+ORDER BY ?rotuloArea ?area ?relacao ?recursoExterno

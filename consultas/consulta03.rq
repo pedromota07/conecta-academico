@@ -1,0 +1,22 @@
+# PC3 — Quais docentes atuam em determinada área de pesquisa?
+#
+# Parâmetro obrigatório: ?area — URI de uma ca:AreaConhecimento (skos:Concept).
+#   Em outra ferramenta SPARQL 1.1, acrescente no início do WHERE, por exemplo:
+#     VALUES ?area { <https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#area-dados-abertos> }
+# Percurso: ?docente (ca:Docente) --ca:atuaEmArea--> ?area.
+# ca:temInteresseEmArea (interesse discente) não é atuação docente e não é
+# consultado. Só a área registrada conta: não há expansão por skos:broader.
+
+PREFIX ca:     <https://pedromota07.github.io/conecta-academico/ontologia/conecta-academico.ttl#>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?area ?rotuloArea ?docente ?nomeDocente
+WHERE {
+  ?area a ca:AreaConhecimento ;
+        skos:prefLabel ?rotuloArea .
+  ?docente a ca:Docente ;
+           ca:atuaEmArea ?area ;
+           schema:name ?nomeDocente .
+}
+ORDER BY ?nomeDocente ?docente

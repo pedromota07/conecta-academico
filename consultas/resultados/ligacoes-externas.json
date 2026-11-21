@@ -1,0 +1,71 @@
+{
+  "head": {
+    "vars": [
+      "area",
+      "rotuloArea",
+      "relacao",
+      "recursoExterno"
+    ]
+  },
+  "results": {
+    "bindings": [
+      {
+        "area": {
+          "type": "uri",
+          "value": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#area-curadoria-digital"
+        },
+        "rotuloArea": {
+          "type": "literal",
+          "value": "Curadoria digital",
+          "xml:lang": "pt-BR"
+        },
+        "relacao": {
+          "type": "uri",
+          "value": "http://www.w3.org/2004/02/skos/core#closeMatch"
+        },
+        "recursoExterno": {
+          "type": "uri",
+          "value": "http://www.wikidata.org/entity/Q5276060"
+        }
+      },
+      {
+        "area": {
+          "type": "uri",
+          "value": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#area-dados-abertos"
+        },
+        "rotuloArea": {
+          "type": "literal",
+          "value": "Dados abertos",
+          "xml:lang": "pt-BR"
+        },
+        "relacao": {
+          "type": "uri",
+          "value": "http://www.w3.org/2004/02/skos/core#closeMatch"
+        },
+        "recursoExterno": {
+          "type": "uri",
+          "value": "http://www.wikidata.org/entity/Q309901"
+        }
+      },
+      {
+        "area": {
+          "type": "uri",
+          "value": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#area-web-semantica"
+        },
+        "rotuloArea": {
+          "type": "literal",
+          "value": "Web Semântica",
+          "xml:lang": "pt-BR"
+        },
+        "relacao": {
+          "type": "uri",
+          "value": "http://www.w3.org/2004/02/skos/core#closeMatch"
+        },
+        "recursoExterno": {
+          "type": "uri",
+          "value": "http://www.wikidata.org/entity/Q54837"
+        }
+      }
+    ]
+  }
+}

@@ -296,6 +296,54 @@ class TesteGerador(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.gerar(self.dados)
 
+    def test_pagina_de_dados_apresenta_artefatos_reais_das_consultas(self):
+        self.gerar()
+        dados = Pagina(self.destino / "dados.html")
+        manifesto = json.loads((RAIZ / "consultas" / "resultados" / "execucoes.json").read_text(encoding="utf-8"))
+        for alvo in ("ontologia/conecta-academico.ttl", "ontologia/instancias.ttl"):
+            self.assertIn(alvo, dados.destinos)
+            self.assertEqual((self.destino / alvo).read_bytes(), (RAIZ / alvo).read_bytes())
+        for execucao in manifesto["execucoes"]:
+            with self.subTest(resultado=execucao["resultado"]):
+                self.assertIn(f"consultas/resultados/{execucao['resultado']}", dados.destinos)
+                self.assertIn(f"consultas/{execucao['consulta']}.rq", dados.destinos)
+                self.assertIn(normalizar(execucao["pergunta"]), dados.texto)
+        self.assertIn("Não informado", dados.texto)
+        self.assertIn("Não há endpoint SPARQL público", dados.texto)
+        for pagina in ("index.html", "perfis/pessoa-ana.html"):
+            self.assertTrue(any(d.endswith("dados.html") for d in Pagina(self.destino / pagina).destinos))
+
+    def test_busca_e_filtro_sao_progressivos_e_perfis_ficam_no_html(self):
+        self.gerar()
+        html = (self.destino / "index.html").read_text(encoding="utf-8")
+        self.assertRegex(html, r"<form[^>]*data-filtro[^>]*hidden")
+        self.assertRegex(html, r'id="sem-resultados" hidden')
+        self.assertIn('src="assets/diretorio.js"', html)
+        self.assertTrue((self.destino / "assets" / "diretorio.js").is_file())
+        cursos = {curso["id"]: curso["nome"] for curso in self.dados["cursos"]}
+        for pessoa in self.discentes:
+            with self.subTest(pessoa=pessoa["id"]):
+                self.assertIn(f'href="perfis/{pessoa["id"]}.html"', html)
+                for curso in pessoa["discencia"]["cursos"]:
+                    self.assertIn(cursos[curso].lower(), html)
+
+    def test_perfil_aponta_para_o_recurso_rdf_correspondente(self):
+        self.gerar()
+        instancias = (self.destino / "ontologia" / "instancias.ttl").read_text(encoding="utf-8")
+        for identificador in self.perfis:
+            with self.subTest(pessoa=identificador):
+                perfil = Pagina(self.destino / "perfis" / f"{identificador}.html")
+                self.assertIn(f"../ontologia/instancias.ttl#{identificador}", perfil.destinos)
+                self.assertIn(f"inst:{identificador}", instancias)
+
+    def test_saida_funciona_em_subdiretorio_aninhado(self):
+        destino = self.pasta / "publicacao" / "conecta-academico"
+        self.gerar(destino=destino)
+        for caminho in destino.rglob("*.html"):
+            for alvo in Pagina(caminho).destinos:
+                with self.subTest(pagina=caminho.name, destino=alvo):
+                    self.assertFalse(alvo.startswith("/"))
+
     def test_pc1_e_pc6_discriminam_papel_e_unidade(self):
         vinculos_docentes = [set(p["docencia"]["unidadesDocentes"]) for p in self.docentes]
         vinculos_discentes = [set(p["discencia"]["unidadesDiscentes"]) for p in self.discentes]

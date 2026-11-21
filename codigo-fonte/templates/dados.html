@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Ontologia, dados RDF, consultas SPARQL e ligações externas do ConectaAcadêmico.">
+  <title>Dados e consultas | ConectaAcadêmico</title>
+  <link rel="stylesheet" href="${raiz}assets/estilos.css">
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="site-header">
+    <div class="header-inner shell">
+      <a class="site-title" href="${raiz}index.html">
+        <span class="brand-mark" aria-hidden="true"></span>ConectaAcadêmico
+      </a>
+      <nav aria-label="Navegação principal">
+        <a class="nav-link" href="${raiz}index.html#perfis">Perfis</a>
+        <a class="nav-link" href="${raiz}dados.html" aria-current="page">Dados e consultas</a>
+      </nav>
+    </div>
+  </header>
+  <main class="shell data-main" id="conteudo" tabindex="-1">
+    <section class="page-intro" aria-labelledby="titulo">
+      <h1 id="titulo">Dados e consultas</h1>
+      <p>Os perfis do diretório também estão descritos em RDF. Esta página reúne os arquivos, as seis perguntas de competência com suas consultas SPARQL e as ligações das áreas de conhecimento com o Wikidata.</p>
+      <p class="demo-note">Os resultados abaixo foram exportados de uma execução local sobre o conjunto de demonstração (${instituicao}). Não há endpoint SPARQL público.</p>
+      <nav class="page-toc" aria-label="Nesta página">
+        <a href="#arquivos">Arquivos RDF</a>
+        <a href="#consultas">Consultas SPARQL</a>
+        <a href="#ligacoes">Ligações externas</a>
+        <a href="#reproducao">Como reproduzir</a>
+      </nav>
+    </section>
+
+    <section class="data-section" aria-labelledby="arquivos">
+      <h2 id="arquivos">Arquivos RDF</h2>
+      <ul class="detailed-list">
+        <li><strong><a href="${raiz}ontologia/conecta-academico.ttl">Ontologia de aplicação (OWL em Turtle)</a></strong><p>Classes, propriedades, domínios, alcances e alinhamentos. Prefixo <code>ca:</code>.</p></li>
+        <li><strong><a href="${raiz}ontologia/instancias.ttl">Instâncias (RDF em Turtle)</a></strong><p>Pessoas, unidades, cursos, disciplinas, áreas, projetos, grupos e publicações gerados a partir do mesmo JSON que produz as páginas. Prefixo <code>inst:</code>.</p></li>
+      </ul>
+      <p>As URIs usam a base planejada <code>https://pedromota07.github.io/conecta-academico/</code>. A resolução dessas URIs na hospedagem pública ainda não foi verificada. A licença de reutilização do conjunto está pendente de decisão do grupo.</p>
+    </section>
+
+    <section class="data-section" aria-labelledby="consultas">
+      <h2 id="consultas">Consultas SPARQL</h2>
+      <p>Cada consulta foi executada com RDFLib sobre <code>instancias.ttl</code>, sem inferência. Os parâmetros entram como URIs; valores sem registro aparecem como “Não informado”. PC4 e PC5 percorrem relações entre tipos diferentes de entidade: projeto e pessoas, publicação e autores.</p>
+${consultas}
+    </section>
+
+    <section class="data-section" aria-labelledby="ligacoes">
+      <h2 id="ligacoes">Ligações externas</h2>
+      <p>As áreas de conhecimento locais são conceitos SKOS. Três delas têm correspondência com itens do Wikidata. A URI da entidade (forma canônica publicada pela fonte) é diferente da página que a descreve. Não há ligação de pessoas fictícias com identidades reais.</p>
+${ligacoes}
+      <p>Os dados estruturados do Wikidata estão disponíveis sob CC0 1.0. Os textos das páginas seguem outra licença (<a href="${licencas_wikidata}">condições de uso do Wikidata</a>).</p>
+    </section>
+
+    <section class="data-section" aria-labelledby="reproducao">
+      <h2 id="reproducao">Como reproduzir</h2>
+      <p>No repositório, com Python 3.10 ou superior e o ambiente virtual instalado:</p>
+      <pre><code>python -B codigo-fonte/gerar_rdf.py --publicaveis docs/ontologia
+python -B codigo-fonte/executar_consultas.py
+python -B codigo-fonte/executar_consultas.py consulta02 --param curso=curso-biblioteconomia
+python -B codigo-fonte/gerar_site.py</code></pre>
+      <p>A explicação de cada consulta está em <code>documentacao/consultas-sparql.md</code> e a das ligações em <code>documentacao/ligacoes-externas.md</code>, no <a href="${repositorio}">repositório do projeto</a>.</p>
+    </section>
+  </main>
+  <footer class="site-footer shell">
+    <span><strong>ConectaAcadêmico</strong> · Trabalho da disciplina Web Semântica (UFRRJ)</span>
+    <a href="${raiz}index.html#perfis">Voltar aos perfis</a>
+  </footer>
+</body>
+</html>

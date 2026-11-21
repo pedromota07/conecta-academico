@@ -1,0 +1,22 @@
+# PC2 — Quais discentes pertencem a determinado curso?
+#
+# Parâmetro obrigatório: ?curso — URI de um ca:CursoGraduacao.
+#   O executor (codigo-fonte/executar_consultas.py) fornece o valor como
+#   URIRef em initBindings. Em outra ferramenta SPARQL 1.1, acrescente no
+#   início do WHERE, por exemplo:
+#     VALUES ?curso { <https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#curso-sistemas-informacao> }
+# Percurso: ?discente (ca:Discente) --ca:matriculadoEm--> ?curso.
+# A seleção usa a identidade (URI) do curso, nunca o nome de exibição.
+
+PREFIX ca:     <https://pedromota07.github.io/conecta-academico/ontologia/conecta-academico.ttl#>
+PREFIX schema: <https://schema.org/>
+
+SELECT ?curso ?nomeCurso ?discente ?nomeDiscente
+WHERE {
+  ?curso a ca:CursoGraduacao ;
+         schema:name ?nomeCurso .
+  ?discente a ca:Discente ;
+            ca:matriculadoEm ?curso ;
+            schema:name ?nomeDiscente .
+}
+ORDER BY ?nomeDiscente ?discente

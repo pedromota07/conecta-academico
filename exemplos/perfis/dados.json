@@ -1,17 +1,18 @@
 {
-  "instituicaoReferencia": "Universidade Exemplo",
+  "instituicaoReferencia": "Universidade Demonstrativa",
   "fontes": [
-    "Os perfis de Ana e João foram adaptados dos modelos fictícios do professor Tiago Cruz de França para a disciplina Web Semântica da UFRRJ. Os demais perfis e as relações entre registros foram elaborados para esta demonstração."
+    "Os perfis de Ana e João foram adaptados dos modelos fictícios do professor Tiago Cruz de França para a disciplina Web Semântica da UFRRJ. Os demais perfis, a instituição, as unidades e as relações entre registros foram elaborados para esta demonstração e não descrevem pessoas ou unidades reais.",
+    "As correspondências externas das áreas de conhecimento apontam para itens do Wikidata, cujos dados estruturados são disponibilizados sob CC0 1.0."
   ],
   "pessoas": [
     {
       "id": "pessoa-ana",
-      "nome": "Ana Exemplo da Silva",
+      "nome": "Ana Silva",
       "apresentacao": "Ensino Computação e pesquiso formas de organizar, publicar e interligar dados acadêmicos. Meus projetos combinam Web Semântica e engenharia de conhecimento para facilitar o acesso à informação científica.",
       "formacao": [
-        "Doutorado em Ciência da Computação, 2018",
-        "Mestrado em Informática, 2012",
-        "Graduação em Sistemas de Informação, 2009"
+        "Doutorado em Ciência da Computação, concluído em 2018",
+        "Mestrado em Informática, concluído em 2012",
+        "Graduação em Sistemas de Informação, concluída em 2009"
       ],
       "docencia": {
         "cargo": "Professora associada",
@@ -22,12 +23,12 @@
     },
     {
       "id": "pessoa-rafael",
-      "nome": "Rafael Exemplo Duarte",
+      "nome": "Rafael Duarte",
       "apresentacao": "Pesquiso práticas de curadoria para acervos digitais. Em sala, trabalho com organização da informação e ajudo estudantes a descrever coleções que possam ser consultadas e preservadas ao longo do tempo.",
       "formacao": [
-        "Doutorado em Ciência da Informação, 2019",
-        "Mestrado em Memória Social, 2013",
-        "Graduação em Biblioteconomia, 2010"
+        "Doutorado em Ciência da Informação, concluído em 2019",
+        "Mestrado em Memória Social, concluído em 2013",
+        "Graduação em Biblioteconomia, concluída em 2010"
       ],
       "docencia": {
         "cargo": "Professor adjunto",
@@ -38,9 +39,9 @@
     },
     {
       "id": "pessoa-joao",
-      "nome": "João Exemplo Pereira",
-      "apresentacao": "Estudo desenvolvimento web e organização de dados. Participo de um projeto em que transformamos informações acadêmicas em catálogos que podem ser consultados e reaproveitados.",
-      "formacao": ["Graduação em andamento, ingresso em 2024"],
+      "nome": "João Pereira",
+      "apresentacao": "Estudo desenvolvimento web e organização de dados. No projeto do catálogo acadêmico, ajudo a converter os registros do diretório em arquivos que podem ser consultados e reaproveitados por outras aplicações.",
+      "formacao": ["Bacharelado em Sistemas de Informação, em andamento, com ingresso em 2024"],
       "discencia": {
         "unidadesDiscentes": ["unidade-computacao"],
         "cursos": ["curso-sistemas-informacao"],
@@ -50,9 +51,9 @@
     },
     {
       "id": "pessoa-clara",
-      "nome": "Clara Exemplo Nunes",
+      "nome": "Clara Nunes",
       "apresentacao": "Estudo como descrever e preservar coleções digitais. No laboratório, elaboro registros de catalogação e avalio se os termos escolhidos ajudam outras pessoas a encontrar materiais no acervo.",
-      "formacao": ["Graduação em andamento, ingresso em 2025"],
+      "formacao": ["Bacharelado em Biblioteconomia, em andamento, com ingresso em 2025"],
       "discencia": {
         "unidadesDiscentes": ["unidade-gestao-informacao"],
         "cursos": ["curso-biblioteconomia"],
@@ -115,19 +116,49 @@
       "id": "area-dados-abertos",
       "rotuloPreferido": "Dados abertos",
       "definicao": "Publicação de dados com condições que permitem acesso, uso e reutilização.",
-      "areasMaisAmplas": ["area-gestao-informacao"]
+      "areasMaisAmplas": ["area-gestao-informacao"],
+      "correspondenciasExternas": [
+        {
+          "uri": "http://www.wikidata.org/entity/Q309901",
+          "predicado": "skos:closeMatch",
+          "rotulo": "open data",
+          "fonte": "https://www.wikidata.org/wiki/Q309901",
+          "dataVerificacao": "2026-11-21",
+          "justificativa": "O item descreve dados acessíveis e utilizáveis por outras pessoas e é classificado como conceito e campo de trabalho. A área local trata da publicação desses dados como tema de pesquisa. Os referentes são comparáveis, mas o recorte local é mais estreito, por isso a correspondência é próxima e não exata."
+        }
+      ]
     },
     {
       "id": "area-web-semantica",
       "rotuloPreferido": "Web Semântica",
-      "definicao": "Representação e interligação de informações na Web com significado explícito."
+      "definicao": "Representação e interligação de informações na Web com significado explícito.",
+      "correspondenciasExternas": [
+        {
+          "uri": "http://www.wikidata.org/entity/Q54837",
+          "predicado": "skos:closeMatch",
+          "rotulo": "Semantic Web",
+          "fonte": "https://www.wikidata.org/wiki/Q54837",
+          "dataVerificacao": "2026-11-21",
+          "justificativa": "O item é classificado como campo de estudo e disciplina acadêmica, além de descrever a extensão da Web para troca de dados. A área local corresponde ao campo de estudo. Como o item externo também abrange a tecnologia, a correspondência é próxima e não exata."
+        }
+      ]
     },
     {
       "id": "area-curadoria-digital",
       "rotuloPreferido": "Curadoria digital",
       "definicao": "Seleção, documentação e preservação de recursos digitais ao longo do tempo.",
       "rotulosAlternativos": ["Curadoria de recursos digitais"],
-      "areasMaisAmplas": ["area-gestao-informacao"]
+      "areasMaisAmplas": ["area-gestao-informacao"],
+      "correspondenciasExternas": [
+        {
+          "uri": "http://www.wikidata.org/entity/Q5276060",
+          "predicado": "skos:closeMatch",
+          "rotulo": "digital curation",
+          "fonte": "https://www.wikidata.org/wiki/Q5276060",
+          "dataVerificacao": "2026-11-21",
+          "justificativa": "O item descreve seleção, preservação, manutenção, coleta e arquivamento de ativos digitais e é subclasse de curadoria. A definição local cobre seleção, documentação e preservação. Os conceitos são muito próximos, mas a correspondência próxima evita propagar equivalências por transitividade."
+        }
+      ]
     },
     {
       "id": "area-desenvolvimento-web",
@@ -139,19 +170,19 @@
     {
       "id": "projeto-dados-abertos",
       "titulo": "Catálogo acadêmico de dados abertos",
-      "descricao": "Organiza e interliga dados de um diretório acadêmico para permitir análises e reutilização.",
+      "descricao": "Converte os registros de um diretório acadêmico em RDF, define identificadores estáveis para pessoas, cursos e projetos e testa consultas SPARQL sobre vínculos e autoria.",
       "participantes": ["pessoa-ana", "pessoa-joao"]
     },
     {
       "id": "projeto-curadoria-digital",
       "titulo": "Curadoria de acervos digitais",
-      "descricao": "Sistematiza critérios para selecionar, descrever e preservar coleções de ensino.",
+      "descricao": "Reúne critérios para selecionar, descrever e preservar coleções usadas no ensino e os registra em um guia de procedimentos para o laboratório.",
       "participantes": ["pessoa-rafael"]
     },
     {
       "id": "projeto-acervos-digitais",
       "titulo": "Curadoria de acervos digitais para ensino",
-      "descricao": "Avalia a recuperação de uma coleção didática piloto por meio de termos de assunto.",
+      "descricao": "Atribui termos de assunto a uma coleção didática piloto e compara buscas feitas antes e depois da indexação.",
       "participantes": ["pessoa-clara"]
     }
   ],

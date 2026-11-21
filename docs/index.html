@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Diretório demonstrativo de perfis acadêmicos de docentes e discentes.">
+  <meta name="description" content="Diretório demonstrativo de perfis acadêmicos fictícios de docentes e discentes.">
   <title>ConectaAcadêmico | Diretório de perfis</title>
   <link rel="stylesheet" href="assets/estilos.css">
 </head>
@@ -15,41 +15,53 @@
         <span class="brand-mark" aria-hidden="true"></span>ConectaAcadêmico
       </a>
       <nav aria-label="Navegação principal">
-        <a class="nav-link" href="#perfis">Ver perfis</a>
+        <a class="nav-link" href="#perfis" aria-current="page">Perfis</a>
+        <a class="nav-link" href="dados.html">Dados e consultas</a>
       </nav>
     </div>
   </header>
   <main class="shell directory-main" id="conteudo" tabindex="-1">
-    <section class="hero" aria-labelledby="titulo">
-      <div class="hero-content">
-        <p class="hero-context">Web Semântica · UFRRJ</p>
-        <h1 id="titulo">Diretório acadêmico</h1>
-        <p>Explore a formação, os projetos e a produção acadêmica dos perfis da Universidade Exemplo.</p>
-        <p class="demo-note"><span aria-hidden="true"></span>Demonstração acadêmica com dados fictícios</p>
-      </div>
-      <div class="hero-art" aria-hidden="true">
-        <span class="orbit orbit-outer"></span>
-        <span class="orbit orbit-inner"></span>
-        <span class="orbit orbit-cross"></span>
-        <span class="node node-main"></span>
-        <span class="node node-top"></span>
-        <span class="node node-side"></span>
-        <span class="node node-bottom"></span>
-      </div>
+    <section class="page-intro" aria-labelledby="titulo">
+      <h1 id="titulo">Diretório acadêmico</h1>
+      <p>Encontre docentes e discentes da Universidade Demonstrativa, uma universidade fictícia, e veja vínculo, curso, áreas de pesquisa, projetos e publicações de cada perfil.</p>
+      <p class="demo-note">Demonstração da disciplina Web Semântica. Pessoas, instituição e unidades são fictícias.</p>
     </section>
     <section class="directory" aria-labelledby="perfis">
-      <h2 id="perfis">Perfis</h2>
-      <ul class="profile-grid" role="list">
-<li class="profile-card" data-papel="docente"><div class="profile-card-top"><span class="avatar" aria-hidden="true">AS</span><span class="role-label">Docente</span></div><h3><a href="perfis/pessoa-ana.html">Ana Exemplo da Silva</a></h3><p class="profile-card-detail">Departamento de Computação</p></li>
-<li class="profile-card" data-papel="docente"><div class="profile-card-top"><span class="avatar" aria-hidden="true">RD</span><span class="role-label">Docente</span></div><h3><a href="perfis/pessoa-rafael.html">Rafael Exemplo Duarte</a></h3><p class="profile-card-detail">Departamento de Gestão da Informação</p></li>
-<li class="profile-card" data-papel="discente"><div class="profile-card-top"><span class="avatar" aria-hidden="true">JP</span><span class="role-label">Discente</span></div><h3><a href="perfis/pessoa-joao.html">João Exemplo Pereira</a></h3><p class="profile-card-detail">Bacharelado em Sistemas de Informação</p></li>
-<li class="profile-card" data-papel="discente"><div class="profile-card-top"><span class="avatar" aria-hidden="true">CN</span><span class="role-label">Discente</span></div><h3><a href="perfis/pessoa-clara.html">Clara Exemplo Nunes</a></h3><p class="profile-card-detail">Bacharelado em Biblioteconomia</p></li>
+      <div class="directory-head">
+        <h2 id="perfis">Perfis</h2>
+        <p class="directory-count" id="contagem" aria-live="polite">4 perfis</p>
+      </div>
+      <form class="directory-filter" role="search" aria-label="Filtrar perfis" data-filtro hidden>
+        <div class="field field-search">
+          <label for="busca">Buscar por nome, curso, unidade ou área</label>
+          <input id="busca" name="busca" type="search" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="papel">Papel</label>
+          <select id="papel" name="papel">
+            <option value="">Todos</option>
+            <option value="docente">Docentes</option>
+            <option value="discente">Discentes</option>
+          </select>
+        </div>
+        <button class="button-secondary" type="reset">Limpar</button>
+      </form>
+      <ul class="profile-grid" role="list" data-perfis>
+<li class="profile-card" data-papel="docente" data-busca="ana silva docente departamento de computação dados abertos web semântica"><span class="avatar" aria-hidden="true">AS</span><div class="profile-card-body"><p class="role-label">Docente · Professora associada</p><h3><a href="perfis/pessoa-ana.html">Ana Silva</a></h3><p class="profile-card-detail">Departamento de Computação</p><ul class="area-list"><li>Dados abertos</li><li>Web Semântica</li></ul></div></li>
+<li class="profile-card" data-papel="docente" data-busca="rafael duarte docente departamento de gestão da informação curadoria digital"><span class="avatar" aria-hidden="true">RD</span><div class="profile-card-body"><p class="role-label">Docente · Professor adjunto</p><h3><a href="perfis/pessoa-rafael.html">Rafael Duarte</a></h3><p class="profile-card-detail">Departamento de Gestão da Informação</p><ul class="area-list"><li>Curadoria digital</li></ul></div></li>
+<li class="profile-card" data-papel="discente" data-busca="joão pereira discente departamento de computação bacharelado em sistemas de informação dados abertos desenvolvimento web"><span class="avatar" aria-hidden="true">JP</span><div class="profile-card-body"><p class="role-label">Discente</p><h3><a href="perfis/pessoa-joao.html">João Pereira</a></h3><p class="profile-card-detail">Bacharelado em Sistemas de Informação</p><ul class="area-list"><li>Dados abertos</li><li>Desenvolvimento web</li></ul></div></li>
+<li class="profile-card" data-papel="discente" data-busca="clara nunes discente departamento de gestão da informação bacharelado em biblioteconomia curadoria digital gestão da informação"><span class="avatar" aria-hidden="true">CN</span><div class="profile-card-body"><p class="role-label">Discente</p><h3><a href="perfis/pessoa-clara.html">Clara Nunes</a></h3><p class="profile-card-detail">Bacharelado em Biblioteconomia</p><ul class="area-list"><li>Curadoria digital</li><li>Gestão da informação</li></ul></div></li>
       </ul>
+      <div class="empty-state" id="sem-resultados" hidden>
+        <p>Nenhum perfil corresponde à busca.</p>
+        <button class="button-secondary" type="button" data-limpar>Limpar filtros</button>
+      </div>
     </section>
   </main>
   <footer class="site-footer shell">
-    <strong>ConectaAcadêmico</strong>
-    <span>Trabalho de Web Semântica · UFRRJ</span>
+    <span><strong>ConectaAcadêmico</strong> · Trabalho da disciplina Web Semântica (UFRRJ)</span>
+    <a href="dados.html">Dados, ontologia e consultas SPARQL</a>
   </footer>
+  <script src="assets/diretorio.js" defer></script>
 </body>
 </html>

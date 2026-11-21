@@ -1,0 +1,35 @@
+# PC5 — Quais publicações estão associadas a determinado docente e quem são
+# seus coautores, quando essa informação estiver representada?
+#
+# Parâmetro obrigatório: ?docente — URI de uma pessoa com tipo ca:Docente.
+#   Em outra ferramenta SPARQL 1.1, acrescente no início do WHERE, por exemplo:
+#     VALUES ?docente { <https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#pessoa-ana> }
+# Percurso (relação entre tipos de entidade):
+#   ?publicacao (ca:Publicacao) --ca:temAutor--> ?docente
+#   ?publicacao (ca:Publicacao) --ca:temAutor--> ?coautor (outra ca:Pessoa)
+# Usa apenas ca:temAutor. schema:author também está no grafo, com os mesmos
+# pares, mas combinar os dois predicados duplicaria linhas.
+# O FILTER fica dentro do OPTIONAL: exclui o próprio docente da lista de
+# coautores sem descartar a publicação que não tem outro autor registrado.
+# Nesse caso ?coautor fica sem valor (não associado). Ausência de registro
+# não comprova autoria exclusiva. O coautor não precisa ter perfil (papel).
+
+PREFIX ca:      <https://pedromota07.github.io/conecta-academico/ontologia/conecta-academico.ttl#>
+PREFIX schema:  <https://schema.org/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+
+SELECT ?docente ?nomeDocente ?publicacao ?tituloPublicacao ?ano ?coautor ?nomeCoautor
+WHERE {
+  ?docente a ca:Docente ;
+           schema:name ?nomeDocente .
+  ?publicacao a ca:Publicacao ;
+              ca:temAutor ?docente ;
+              dcterms:title ?tituloPublicacao .
+  OPTIONAL { ?publicacao ca:anoPublicacao ?ano }
+  OPTIONAL {
+    ?publicacao ca:temAutor ?coautor .
+    FILTER (?coautor != ?docente)
+    OPTIONAL { ?coautor schema:name ?nomeCoautor }
+  }
+}
+ORDER BY ?tituloPublicacao ?publicacao ?nomeCoautor ?coautor

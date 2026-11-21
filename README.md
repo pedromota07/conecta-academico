@@ -11,6 +11,7 @@ O ConectaAcadêmico é um diretório estático de perfis docentes e discentes. O
 - JSON como fonte editorial dos perfis e dos recursos acadêmicos relacionados.
 - Python 3.10 ou superior e biblioteca padrão para validar os dados, gerar o site e executar os testes.
 - HTML5 e CSS3 responsivo para a navegação estática no navegador.
+- RDFLib em ambiente virtual para gerar e testar o RDF/Turtle.
 
 ## Dados e execução local
 
@@ -32,10 +33,14 @@ python -B -m http.server 8000 --bind 127.0.0.1 --directory docs
 
 Com o servidor rodando, abra [a prévia local](http://127.0.0.1:8000/). Os caminhos relativos também funcionam sob um subdiretório.
 
-## Testes
+## Ontologia e RDF
+
+A [ontologia OWL](ontologia/conecta-academico.ttl) e o [grafo de instâncias](ontologia/instancias.ttl) seguem o modelo aprovado. A [documentação da ontologia](documentacao/ontologia-aplicacao.md) explica as URIs previstas, os caminhos para PC1–PC6 e os comandos de instalação, geração, preparação das cópias estáticas e teste da Etapa 4.
+
+## Testes do site
 
 ```powershell
-python -B -m unittest discover -s testes -v
+python -B -m unittest discover -s testes -p "test_gerar_site.py" -v
 ```
 
 Os testes geram a saída em diretórios temporários e verificam páginas, links, papéis acadêmicos, rejeição de dados inválidos e cobertura dos cenários PC1–PC6. O teste de um quinto perfil usa uma cópia dos dados.
@@ -70,7 +75,7 @@ O comando produz o SVG a partir do DOT. A distribuição visual pode variar com 
 
 ## Situação atual
 
-As Etapas 0, 1, 2 e 3 estão integradas à branch principal. O diretório estático e seus quatro perfis foram implementados e o código está disponível neste repositório. A ontologia OWL, os dados RDF, as consultas SPARQL, as ligações externas LOD e a hospedagem pública do site permanecem para as próximas etapas. Consulte os [requisitos](proposta/requisitos.md) e a [declaração de uso de IA](documentacao/uso-ia.md).
+As Etapas 0 a 4 estão concluídas e integradas à branch principal, incluindo o diretório estático, a ontologia OWL e a geração de dados RDF/Turtle. As consultas SPARQL, as ligações externas LOD, a aprovação da licença e a hospedagem pública do site ficam para as próximas etapas. Consulte os [requisitos](proposta/requisitos.md) e a [declaração de uso de IA](documentacao/uso-ia.md).
 
 ## Integrantes
 

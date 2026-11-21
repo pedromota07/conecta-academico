@@ -43,3 +43,13 @@ O grupo deve revisar este registro e acrescentar o uso de IA das próximas etapa
 **Verificações realizadas** — Os arquivos HTML e CSS do professor foram consultados no ZIP original. A geração local e os testes automatizados verificaram as páginas, os vínculos, as referências internas, o escape de conteúdo, os cenários PC1–PC6 e a inclusão isolada de um quinto perfil. O quinto registro de teste exerceu os dois papéis com o mesmo identificador. No Chrome, foram conferidos os links, a navegação por teclado e a responsividade em desktop e em telas estreitas.
 
 **Auditoria final** — Na raiz do repositório, `python -B codigo-fonte/gerar_site.py` gerou seis arquivos, que coincidiram byte a byte com a segunda geração em um diretório temporário. `python -B -m unittest discover -s testes -v` executou 23 testes com sucesso. A navegação no Chrome foi verificada em 1440, 390 e 320 px, diretamente pelos arquivos e por HTTP local em um subdiretório. `git diff --check` e a checagem complementar dos arquivos novos passaram.
+
+## Etapa 4
+
+**Ferramenta e finalidade** — OpenAI Codex, com assistência delegada para preparar a ontologia OWL, o gerador RDF/Turtle e os testes. A busca na Web apoiou a conferência das especificações oficiais de OWL, Schema.org, AIISO, DCMI e SKOS.
+
+**Síntese da solicitação** — Implementar as 11 classes e as relações R01–R15 conforme o modelo aprovado, converter os registros JSON em Turtle com URIs estáveis e conferir por travessia do grafo a cobertura de PC1–PC6.
+
+**Partes afetadas** — Ontologia, grafo de instâncias, gerador e sua dependência, cópias estáticas, testes RDF, documentação da ontologia, rastreabilidade, README e esta entrada.
+
+**Verificações realizadas** — O RDFLib 7.6.0 carregou a ontologia e as instâncias. Foram conferidos os 28 registros, os vínculos com os quatro perfis e os percursos de PC1–PC6. A auditoria dos grafos incluiu verificação do perfil OWL 2 DL com OWLAPI 3.4.3 e análise de consistência da ontologia com as instâncias locais pelo Pellet 2.3.1, via Owlready2 0.51 e OpenJDK 25. A análise local não encontrou inconsistências ou classes insatisfatíveis. Os testes do site e os testes RDF foram executados em ambiente virtual.

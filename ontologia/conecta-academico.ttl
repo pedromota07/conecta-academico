@@ -1,0 +1,284 @@
+@prefix ca: <https://pedromota07.github.io/conecta-academico/ontologia/conecta-academico.ttl#> .
+@prefix aiiso: <http://purl.org/vocab/aiiso/schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://pedromota07.github.io/conecta-academico/ontologia/conecta-academico.ttl>
+    a owl:Ontology ;
+    rdfs:label "Ontologia de aplicação do ConectaAcadêmico"@pt-BR ;
+    rdfs:comment "Descreve os perfis acadêmicos, seus vínculos institucionais, currículos, áreas de conhecimento, projetos, grupos e publicações."@pt-BR .
+
+# Declarações externas necessárias para interpretar os axiomas locais sem importações.
+
+schema:Person a owl:Class .
+schema:Organization a owl:Class .
+schema:EducationalOccupationalProgram a owl:Class .
+schema:Course a owl:Class .
+schema:CreativeWork a owl:Class .
+schema:Dataset a owl:Class .
+aiiso:Department a owl:Class .
+aiiso:Programme a owl:Class .
+skos:Concept a owl:Class .
+
+schema:affiliation a owl:ObjectProperty .
+schema:hasCourse a owl:ObjectProperty .
+schema:author a owl:ObjectProperty .
+aiiso:part_of a owl:ObjectProperty .
+skos:broader a owl:ObjectProperty .
+
+# Classes do diretório
+
+ca:Pessoa
+    a owl:Class ;
+    rdfs:subClassOf schema:Person ;
+    rdfs:label "Pessoa"@pt-BR ;
+    rdfs:comment "Pessoa identificada no diretório, inclusive participante de pesquisa ou autora sem perfil docente ou discente."@pt-BR .
+
+ca:Docente
+    a owl:Class ;
+    rdfs:subClassOf ca:Pessoa ;
+    rdfs:label "Docente"@pt-BR ;
+    rdfs:comment "Pessoa que exerce o papel acadêmico de docência no contexto do diretório."@pt-BR .
+
+ca:Discente
+    a owl:Class ;
+    rdfs:subClassOf ca:Pessoa ;
+    rdfs:label "Discente"@pt-BR ;
+    rdfs:comment "Pessoa que exerce o papel acadêmico de discência no contexto do diretório."@pt-BR .
+
+ca:UnidadeAcademica
+    a owl:Class ;
+    rdfs:subClassOf schema:Organization ;
+    rdfs:label "Unidade acadêmica"@pt-BR ;
+    rdfs:comment "Unidade organizacional da instituição de referência que pode receber vínculos acadêmicos e responder por cursos."@pt-BR .
+
+ca:Departamento
+    a owl:Class ;
+    rdfs:subClassOf ca:UnidadeAcademica, aiiso:Department ;
+    rdfs:label "Departamento"@pt-BR ;
+    rdfs:comment "Unidade acadêmica reconhecida pela instituição como departamento."@pt-BR .
+
+ca:CursoGraduacao
+    a owl:Class ;
+    rdfs:subClassOf aiiso:Programme, schema:EducationalOccupationalProgram ;
+    rdfs:label "Curso de graduação"@pt-BR ;
+    rdfs:comment "Programa de formação superior organizado em componentes curriculares e mantido sob responsabilidade institucional."@pt-BR .
+
+ca:Disciplina
+    a owl:Class ;
+    rdfs:subClassOf schema:Course ;
+    rdfs:label "Disciplina"@pt-BR ;
+    rdfs:comment "Componente curricular que pode integrar vários cursos de graduação e ser ministrado ou cursado."@pt-BR .
+
+ca:AreaConhecimento
+    a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Área de conhecimento"@pt-BR ;
+    rdfs:comment "Conceito temático de um vocabulário controlado para descrever atuação em pesquisa ou interesse acadêmico."@pt-BR .
+
+ca:ProjetoPesquisa
+    a owl:Class ;
+    rdfs:label "Projeto de pesquisa"@pt-BR ;
+    rdfs:comment "Atividade de pesquisa com objetivo definido e participação de pessoas."@pt-BR .
+
+ca:GrupoPesquisa
+    a owl:Class ;
+    rdfs:label "Grupo de pesquisa"@pt-BR ;
+    rdfs:comment "Coletivo de pessoas dedicado à pesquisa, com possíveis linhas de atuação e projetos associados."@pt-BR .
+
+ca:Publicacao
+    a owl:Class ;
+    rdfs:subClassOf schema:CreativeWork ;
+    rdfs:label "Publicação"@pt-BR ;
+    rdfs:comment "Produção acadêmica identificável, incluindo artigos e trabalhos discentes, cuja autoria pode estar parcialmente documentada."@pt-BR .
+
+# Relações conceituais R01–R15, na ordem do dicionário de dados.
+
+ca:temVinculoDocente
+    a owl:ObjectProperty ;
+    rdfs:subPropertyOf schema:affiliation ;
+    rdfs:domain ca:Docente ;
+    rdfs:range ca:UnidadeAcademica ;
+    rdfs:label "tem vínculo docente"@pt-BR ;
+    rdfs:comment "Vincula uma pessoa, no papel docente, a uma unidade acadêmica."@pt-BR .
+
+ca:temVinculoDiscente
+    a owl:ObjectProperty ;
+    rdfs:subPropertyOf schema:affiliation ;
+    rdfs:domain ca:Discente ;
+    rdfs:range ca:UnidadeAcademica ;
+    rdfs:label "tem vínculo discente"@pt-BR ;
+    rdfs:comment "Vincula uma pessoa, no papel discente, à unidade acadêmica indicada no registro."@pt-BR .
+
+ca:matriculadoEm
+    a owl:ObjectProperty ;
+    rdfs:domain ca:Discente ;
+    rdfs:range ca:CursoGraduacao ;
+    rdfs:label "matriculado em"@pt-BR ;
+    rdfs:comment "Relaciona o discente ao curso de graduação em que tem matrícula vigente registrada."@pt-BR .
+
+ca:temUnidadeResponsavel
+    a owl:ObjectProperty ;
+    rdfs:domain ca:CursoGraduacao ;
+    rdfs:range ca:UnidadeAcademica ;
+    rdfs:label "tem unidade responsável"@pt-BR ;
+    rdfs:comment "Indica a unidade acadêmica responsável pelo programa de graduação no diretório."@pt-BR .
+
+ca:temUnidadeSuperior
+    a owl:ObjectProperty, owl:IrreflexiveProperty ;
+    rdfs:subPropertyOf aiiso:part_of ;
+    rdfs:domain ca:UnidadeAcademica ;
+    rdfs:range ca:UnidadeAcademica ;
+    rdfs:label "tem unidade superior"@pt-BR ;
+    rdfs:comment "Indica a unidade acadêmica imediatamente superior na estrutura institucional."@pt-BR .
+
+ca:incluiDisciplina
+    a owl:ObjectProperty ;
+    rdfs:subPropertyOf schema:hasCourse ;
+    rdfs:domain ca:CursoGraduacao ;
+    rdfs:range ca:Disciplina ;
+    rdfs:label "inclui disciplina"@pt-BR ;
+    rdfs:comment "Indica uma disciplina que integra o currículo de um curso de graduação."@pt-BR .
+
+ca:ministraDisciplina
+    a owl:ObjectProperty ;
+    rdfs:domain ca:Docente ;
+    rdfs:range ca:Disciplina ;
+    rdfs:label "ministra disciplina"@pt-BR ;
+    rdfs:comment "Indica uma disciplina ministrada pela pessoa no papel docente."@pt-BR .
+
+ca:cursaDisciplina
+    a owl:ObjectProperty ;
+    rdfs:domain ca:Discente ;
+    rdfs:range ca:Disciplina ;
+    rdfs:label "cursa ou cursou disciplina"@pt-BR ;
+    rdfs:comment "Registra a participação discente em uma disciplina atual ou anterior, sem indicar aprovação."@pt-BR .
+
+ca:atuaEmArea
+    a owl:ObjectProperty ;
+    rdfs:domain ca:Docente ;
+    rdfs:range ca:AreaConhecimento ;
+    rdfs:label "atua em área"@pt-BR ;
+    rdfs:comment "Indica uma área de conhecimento em que uma pessoa atua em pesquisa no papel docente."@pt-BR .
+
+ca:temInteresseEmArea
+    a owl:ObjectProperty ;
+    rdfs:domain ca:Discente ;
+    rdfs:range ca:AreaConhecimento ;
+    rdfs:label "tem interesse em área"@pt-BR ;
+    rdfs:comment "Indica uma área de conhecimento de interesse da pessoa no papel discente."@pt-BR .
+
+ca:temAreaMaisAmpla
+    a owl:ObjectProperty ;
+    rdfs:subPropertyOf skos:broader ;
+    rdfs:domain ca:AreaConhecimento ;
+    rdfs:range ca:AreaConhecimento ;
+    rdfs:label "tem área mais ampla"@pt-BR ;
+    rdfs:comment "Indica o conceito imediatamente mais amplo na classificação temática local."@pt-BR .
+
+ca:temParticipante
+    a owl:ObjectProperty ;
+    rdfs:domain ca:ProjetoPesquisa ;
+    rdfs:range ca:Pessoa ;
+    rdfs:label "tem participante"@pt-BR ;
+    rdfs:comment "Relaciona o projeto de pesquisa a uma pessoa com participação registrada."@pt-BR .
+
+ca:temMembro
+    a owl:ObjectProperty ;
+    rdfs:domain ca:GrupoPesquisa ;
+    rdfs:range ca:Pessoa ;
+    rdfs:label "tem membro"@pt-BR ;
+    rdfs:comment "Relaciona o grupo de pesquisa a uma pessoa com vínculo de pertencimento ao grupo."@pt-BR .
+
+ca:associadoAoProjeto
+    a owl:ObjectProperty ;
+    rdfs:domain ca:GrupoPesquisa ;
+    rdfs:range ca:ProjetoPesquisa ;
+    rdfs:label "associado ao projeto"@pt-BR ;
+    rdfs:comment "Relaciona um grupo de pesquisa a um projeto, sem atribuir participação individual a seus membros."@pt-BR .
+
+ca:temAutor
+    a owl:ObjectProperty ;
+    rdfs:subPropertyOf schema:author ;
+    rdfs:domain ca:Publicacao ;
+    rdfs:range ca:Pessoa ;
+    rdfs:label "tem autor"@pt-BR ;
+    rdfs:comment "Relaciona uma publicação a uma pessoa com autoria registrada para a obra."@pt-BR .
+
+# Referências opcionais a recursos na Web
+
+ca:linkAcademico
+    a owl:ObjectProperty ;
+    rdfs:domain ca:Pessoa ;
+    rdfs:range owl:Thing ;
+    rdfs:label "link acadêmico"@pt-BR ;
+    rdfs:comment "Referencia um recurso acadêmico externo pertinente à pessoa e verificado editorialmente."@pt-BR .
+
+ca:linkBibliografico
+    a owl:ObjectProperty ;
+    rdfs:domain ca:Publicacao ;
+    rdfs:range owl:Thing ;
+    rdfs:label "link bibliográfico"@pt-BR ;
+    rdfs:comment "Referencia um recurso da Web associado à obra, como uma página bibliográfica ou um repositório."@pt-BR .
+
+# Propriedades locais de dados
+
+ca:formacao
+    a owl:DatatypeProperty ;
+    rdfs:domain ca:Pessoa ;
+    rdfs:range rdf:PlainLiteral ;
+    rdfs:label "formação acadêmica"@pt-BR ;
+    rdfs:comment "Resumo da formação ou da etapa de estudos da pessoa."@pt-BR .
+
+ca:cargo
+    a owl:DatatypeProperty ;
+    rdfs:domain ca:Docente ;
+    rdfs:range rdf:PlainLiteral ;
+    rdfs:label "cargo docente"@pt-BR ;
+    rdfs:comment "Denominação pública da função acadêmica da pessoa no papel docente."@pt-BR .
+
+ca:linhaAtuacao
+    a owl:DatatypeProperty ;
+    rdfs:domain ca:GrupoPesquisa ;
+    rdfs:range rdf:PlainLiteral ;
+    rdfs:label "linha de atuação"@pt-BR ;
+    rdfs:comment "Descrição pública breve da linha de pesquisa do grupo."@pt-BR .
+
+ca:tipoUnidade
+    a owl:DatatypeProperty ;
+    rdfs:domain ca:UnidadeAcademica ;
+    rdfs:range xsd:string ;
+    rdfs:label "tipo editorial da unidade"@pt-BR ;
+    rdfs:comment "Categoria editorial registrada para uma unidade acadêmica."@pt-BR .
+
+ca:tipoProducao
+    a owl:DatatypeProperty ;
+    rdfs:domain ca:Publicacao ;
+    rdfs:range xsd:string ;
+    rdfs:label "tipo de produção"@pt-BR ;
+    rdfs:comment "Categoria editorial registrada para a publicação ou o trabalho acadêmico."@pt-BR .
+
+ca:anoPublicacao
+    a owl:DatatypeProperty ;
+    rdfs:domain ca:Publicacao ;
+    rdfs:range xsd:integer ;
+    rdfs:label "ano de publicação"@pt-BR ;
+    rdfs:comment "Ano associado à publicação quando o registro informa esse valor."@pt-BR .
+
+ca:instituicaoReferencia
+    a owl:DatatypeProperty ;
+    rdfs:domain schema:Dataset ;
+    rdfs:range rdf:PlainLiteral ;
+    rdfs:label "instituição de referência"@pt-BR ;
+    rdfs:comment "Nome da instituição que dá contexto aos registros do conjunto de dados."@pt-BR .
+
+ca:fonteEditorial
+    a owl:DatatypeProperty ;
+    rdfs:domain schema:Dataset ;
+    rdfs:range rdf:PlainLiteral ;
+    rdfs:label "fonte editorial"@pt-BR ;
+    rdfs:comment "Descrição textual de uma fonte do conjunto de dados sem recurso externo identificado."@pt-BR .

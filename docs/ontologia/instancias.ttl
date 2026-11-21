@@ -1,0 +1,242 @@
+@prefix ca: <https://pedromota07.github.io/conecta-academico/ontologia/conecta-academico.ttl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix inst: <https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#> .
+@prefix schema: <https://schema.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl> a schema:Dataset ;
+    ca:fonteEditorial "Os perfis de Ana e João foram adaptados dos modelos fictícios do professor Tiago Cruz de França para a disciplina Web Semântica da UFRRJ. Os demais perfis e as relações entre registros foram elaborados para esta demonstração."@pt-BR ;
+    ca:instituicaoReferencia "Universidade Exemplo"@pt-BR .
+
+inst:grupo-dados-publicos a ca:GrupoPesquisa ;
+    ca:associadoAoProjeto inst:projeto-dados-abertos ;
+    ca:linhaAtuacao "Interoperabilidade e publicação de dados acadêmicos."@pt-BR ;
+    ca:temMembro inst:pessoa-ana,
+        inst:pessoa-joao ;
+    schema:identifier "grupo-dados-publicos" ;
+    schema:name "Grupo de Dados Públicos e Conhecimento"@pt-BR .
+
+inst:grupo-memoria-digital a ca:GrupoPesquisa ;
+    ca:associadoAoProjeto inst:projeto-acervos-digitais,
+        inst:projeto-curadoria-digital ;
+    ca:linhaAtuacao "Descrição e preservação de coleções digitais."@pt-BR ;
+    ca:temMembro inst:pessoa-clara,
+        inst:pessoa-rafael ;
+    schema:identifier "grupo-memoria-digital" ;
+    schema:name "Grupo de Estudos de Memória Digital"@pt-BR .
+
+inst:publicacao-dados-conectados a ca:Publicacao ;
+    dcterms:title "Dados conectados para descrever coleções universitárias"@pt-BR ;
+    ca:anoPublicacao 2024 ;
+    ca:temAutor inst:pessoa-ana,
+        inst:pessoa-rafael ;
+    ca:tipoProducao "artigo" ;
+    schema:author inst:pessoa-ana,
+        inst:pessoa-rafael ;
+    schema:identifier "publicacao-dados-conectados" .
+
+inst:publicacao-descricao-acervo a ca:Publicacao ;
+    dcterms:title "Descrição temática de uma coleção didática digital"@pt-BR ;
+    ca:anoPublicacao 2026 ;
+    ca:temAutor inst:pessoa-clara ;
+    ca:tipoProducao "trabalho-academico" ;
+    schema:author inst:pessoa-clara ;
+    schema:identifier "publicacao-descricao-acervo" .
+
+inst:publicacao-prototipo-catalogo a ca:Publicacao ;
+    dcterms:title "Protótipo de catálogo para dados acadêmicos"@pt-BR ;
+    ca:anoPublicacao 2025 ;
+    ca:temAutor inst:pessoa-joao ;
+    ca:tipoProducao "trabalho-academico" ;
+    schema:author inst:pessoa-joao ;
+    schema:identifier "publicacao-prototipo-catalogo" .
+
+inst:publicacao-representacao-conhecimento a ca:Publicacao ;
+    dcterms:title "Representação do conhecimento em diretórios acadêmicos"@pt-BR ;
+    ca:anoPublicacao 2022 ;
+    ca:temAutor inst:pessoa-ana ;
+    ca:tipoProducao "artigo" ;
+    schema:author inst:pessoa-ana ;
+    schema:identifier "publicacao-representacao-conhecimento" .
+
+inst:area-desenvolvimento-web a skos:Concept,
+        ca:AreaConhecimento ;
+    skos:definition "Construção de recursos e aplicações usados por meio da Web."@pt-BR ;
+    skos:inScheme <https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#esquema/areas> ;
+    skos:prefLabel "Desenvolvimento web"@pt-BR ;
+    schema:identifier "area-desenvolvimento-web" .
+
+inst:area-web-semantica a skos:Concept,
+        ca:AreaConhecimento ;
+    skos:definition "Representação e interligação de informações na Web com significado explícito."@pt-BR ;
+    skos:inScheme <https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#esquema/areas> ;
+    skos:prefLabel "Web Semântica"@pt-BR ;
+    schema:identifier "area-web-semantica" .
+
+inst:curso-biblioteconomia a ca:CursoGraduacao ;
+    ca:incluiDisciplina inst:disciplina-curadoria-digital,
+        inst:disciplina-organizacao-informacao ;
+    ca:temUnidadeResponsavel inst:unidade-gestao-informacao ;
+    schema:identifier "curso-biblioteconomia" ;
+    schema:name "Bacharelado em Biblioteconomia"@pt-BR .
+
+inst:curso-sistemas-informacao a ca:CursoGraduacao ;
+    ca:incluiDisciplina inst:disciplina-banco-dados,
+        inst:disciplina-web-semantica ;
+    ca:temUnidadeResponsavel inst:unidade-computacao ;
+    schema:identifier "curso-sistemas-informacao" ;
+    schema:name "Bacharelado em Sistemas de Informação"@pt-BR .
+
+inst:projeto-acervos-digitais a ca:ProjetoPesquisa ;
+    dcterms:description "Avalia a recuperação de uma coleção didática piloto por meio de termos de assunto."@pt-BR ;
+    dcterms:title "Curadoria de acervos digitais para ensino"@pt-BR ;
+    ca:temParticipante inst:pessoa-clara ;
+    schema:identifier "projeto-acervos-digitais" .
+
+inst:projeto-curadoria-digital a ca:ProjetoPesquisa ;
+    dcterms:description "Sistematiza critérios para selecionar, descrever e preservar coleções de ensino."@pt-BR ;
+    dcterms:title "Curadoria de acervos digitais"@pt-BR ;
+    ca:temParticipante inst:pessoa-rafael ;
+    schema:identifier "projeto-curadoria-digital" .
+
+inst:projeto-dados-abertos a ca:ProjetoPesquisa ;
+    dcterms:description "Organiza e interliga dados de um diretório acadêmico para permitir análises e reutilização."@pt-BR ;
+    dcterms:title "Catálogo acadêmico de dados abertos"@pt-BR ;
+    ca:temParticipante inst:pessoa-ana,
+        inst:pessoa-joao ;
+    schema:identifier "projeto-dados-abertos" .
+
+inst:unidade-ciencias-exatas a ca:UnidadeAcademica ;
+    ca:tipoUnidade "instituto" ;
+    schema:identifier "unidade-ciencias-exatas" ;
+    schema:name "Instituto de Ciências Exatas"@pt-BR .
+
+inst:unidade-ciencias-informacao a ca:UnidadeAcademica ;
+    ca:tipoUnidade "instituto" ;
+    schema:identifier "unidade-ciencias-informacao" ;
+    schema:name "Instituto de Ciências da Informação"@pt-BR .
+
+<https://pedromota07.github.io/conecta-academico/perfis/pessoa-ana.html> a schema:ProfilePage .
+
+<https://pedromota07.github.io/conecta-academico/perfis/pessoa-clara.html> a schema:ProfilePage .
+
+<https://pedromota07.github.io/conecta-academico/perfis/pessoa-joao.html> a schema:ProfilePage .
+
+<https://pedromota07.github.io/conecta-academico/perfis/pessoa-rafael.html> a schema:ProfilePage .
+
+inst:area-curadoria-digital a skos:Concept,
+        ca:AreaConhecimento ;
+    skos:altLabel "Curadoria de recursos digitais"@pt-BR ;
+    skos:broader inst:area-gestao-informacao ;
+    skos:definition "Seleção, documentação e preservação de recursos digitais ao longo do tempo."@pt-BR ;
+    skos:inScheme <https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#esquema/areas> ;
+    skos:prefLabel "Curadoria digital"@pt-BR ;
+    ca:temAreaMaisAmpla inst:area-gestao-informacao ;
+    schema:identifier "area-curadoria-digital" .
+
+inst:area-dados-abertos a skos:Concept,
+        ca:AreaConhecimento ;
+    skos:broader inst:area-gestao-informacao ;
+    skos:definition "Publicação de dados com condições que permitem acesso, uso e reutilização."@pt-BR ;
+    skos:inScheme <https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#esquema/areas> ;
+    skos:prefLabel "Dados abertos"@pt-BR ;
+    ca:temAreaMaisAmpla inst:area-gestao-informacao ;
+    schema:identifier "area-dados-abertos" .
+
+inst:disciplina-curadoria-digital a ca:Disciplina ;
+    schema:identifier "disciplina-curadoria-digital" ;
+    schema:name "Curadoria Digital"@pt-BR .
+
+inst:disciplina-banco-dados a ca:Disciplina ;
+    schema:identifier "disciplina-banco-dados" ;
+    schema:name "Banco de Dados"@pt-BR .
+
+inst:disciplina-organizacao-informacao a ca:Disciplina ;
+    schema:identifier "disciplina-organizacao-informacao" ;
+    schema:name "Organização da Informação"@pt-BR .
+
+inst:disciplina-web-semantica a ca:Disciplina ;
+    schema:identifier "disciplina-web-semantica" ;
+    schema:name "Web Semântica"@pt-BR .
+
+inst:unidade-computacao a ca:Departamento,
+        ca:UnidadeAcademica ;
+    ca:temUnidadeSuperior inst:unidade-ciencias-exatas ;
+    ca:tipoUnidade "departamento" ;
+    schema:identifier "unidade-computacao" ;
+    schema:name "Departamento de Computação"@pt-BR .
+
+inst:unidade-gestao-informacao a ca:Departamento,
+        ca:UnidadeAcademica ;
+    ca:temUnidadeSuperior inst:unidade-ciencias-informacao ;
+    ca:tipoUnidade "departamento" ;
+    schema:identifier "unidade-gestao-informacao" ;
+    schema:name "Departamento de Gestão da Informação"@pt-BR .
+
+inst:pessoa-clara a ca:Discente,
+        ca:Pessoa ;
+    dcterms:description "Estudo como descrever e preservar coleções digitais. No laboratório, elaboro registros de catalogação e avalio se os termos escolhidos ajudam outras pessoas a encontrar materiais no acervo."@pt-BR ;
+    ca:cursaDisciplina inst:disciplina-organizacao-informacao ;
+    ca:formacao "Graduação em andamento, ingresso em 2025"@pt-BR ;
+    ca:matriculadoEm inst:curso-biblioteconomia ;
+    ca:temInteresseEmArea inst:area-curadoria-digital,
+        inst:area-gestao-informacao ;
+    ca:temVinculoDiscente inst:unidade-gestao-informacao ;
+    schema:identifier "pessoa-clara" ;
+    schema:mainEntityOfPage <https://pedromota07.github.io/conecta-academico/perfis/pessoa-clara.html> ;
+    schema:name "Clara Exemplo Nunes"@pt-BR .
+
+inst:pessoa-joao a ca:Discente,
+        ca:Pessoa ;
+    dcterms:description "Estudo desenvolvimento web e organização de dados. Participo de um projeto em que transformamos informações acadêmicas em catálogos que podem ser consultados e reaproveitados."@pt-BR ;
+    ca:cursaDisciplina inst:disciplina-banco-dados,
+        inst:disciplina-web-semantica ;
+    ca:formacao "Graduação em andamento, ingresso em 2024"@pt-BR ;
+    ca:matriculadoEm inst:curso-sistemas-informacao ;
+    ca:temInteresseEmArea inst:area-dados-abertos,
+        inst:area-desenvolvimento-web ;
+    ca:temVinculoDiscente inst:unidade-computacao ;
+    schema:identifier "pessoa-joao" ;
+    schema:mainEntityOfPage <https://pedromota07.github.io/conecta-academico/perfis/pessoa-joao.html> ;
+    schema:name "João Exemplo Pereira"@pt-BR .
+
+inst:pessoa-rafael a ca:Docente,
+        ca:Pessoa ;
+    dcterms:description "Pesquiso práticas de curadoria para acervos digitais. Em sala, trabalho com organização da informação e ajudo estudantes a descrever coleções que possam ser consultadas e preservadas ao longo do tempo."@pt-BR ;
+    ca:atuaEmArea inst:area-curadoria-digital ;
+    ca:cargo "Professor adjunto"@pt-BR ;
+    ca:formacao "Doutorado em Ciência da Informação, 2019"@pt-BR,
+        "Graduação em Biblioteconomia, 2010"@pt-BR,
+        "Mestrado em Memória Social, 2013"@pt-BR ;
+    ca:ministraDisciplina inst:disciplina-curadoria-digital,
+        inst:disciplina-organizacao-informacao ;
+    ca:temVinculoDocente inst:unidade-gestao-informacao ;
+    schema:identifier "pessoa-rafael" ;
+    schema:mainEntityOfPage <https://pedromota07.github.io/conecta-academico/perfis/pessoa-rafael.html> ;
+    schema:name "Rafael Exemplo Duarte"@pt-BR .
+
+inst:area-gestao-informacao a skos:Concept,
+        ca:AreaConhecimento ;
+    skos:definition "Organização e uso da informação ao longo de seu ciclo de vida."@pt-BR ;
+    skos:inScheme <https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#esquema/areas> ;
+    skos:prefLabel "Gestão da informação"@pt-BR ;
+    schema:identifier "area-gestao-informacao" .
+
+<https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#esquema/areas> a skos:ConceptScheme .
+
+inst:pessoa-ana a ca:Docente,
+        ca:Pessoa ;
+    dcterms:description "Ensino Computação e pesquiso formas de organizar, publicar e interligar dados acadêmicos. Meus projetos combinam Web Semântica e engenharia de conhecimento para facilitar o acesso à informação científica."@pt-BR ;
+    ca:atuaEmArea inst:area-dados-abertos,
+        inst:area-web-semantica ;
+    ca:cargo "Professora associada"@pt-BR ;
+    ca:formacao "Doutorado em Ciência da Computação, 2018"@pt-BR,
+        "Graduação em Sistemas de Informação, 2009"@pt-BR,
+        "Mestrado em Informática, 2012"@pt-BR ;
+    ca:ministraDisciplina inst:disciplina-banco-dados,
+        inst:disciplina-web-semantica ;
+    ca:temVinculoDocente inst:unidade-computacao ;
+    schema:identifier "pessoa-ana" ;
+    schema:mainEntityOfPage <https://pedromota07.github.io/conecta-academico/perfis/pessoa-ana.html> ;
+    schema:name "Ana Exemplo da Silva"@pt-BR .

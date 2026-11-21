@@ -6,6 +6,18 @@ Trabalho final da disciplina Web Semântica da Universidade Federal Rural do Rio
 
 O ConectaAcadêmico é um diretório estático de perfis docentes e discentes. Os quatro perfis desta demonstração, a instituição (Universidade Demonstrativa) e suas unidades são fictícios. A apresentação partiu dos modelos HTML e CSS fornecidos pelo professor.
 
+## Como abrir a aplicação
+
+O site já está gerado. Abra `docs/index.html` no navegador para explorar o catálogo, filtrar os perfis e acessar a página **Dados e consultas**.
+
+Para servir o site via HTTP, abra o PowerShell na pasta `conecta-academico` e execute com o Python instalado no computador.
+
+```powershell
+python -m http.server 8000 --bind 127.0.0.1 --directory docs
+```
+
+Acesse [a prévia local](http://127.0.0.1:8000/) e mantenha o terminal aberto enquanto navega. Pressione `Ctrl+C` no terminal para encerrar o servidor.
+
 ## Tecnologias implementadas
 
 - JSON como fonte editorial única dos perfis, dos recursos acadêmicos e das ligações externas.
@@ -13,7 +25,7 @@ O ConectaAcadêmico é um diretório estático de perfis docentes e discentes. O
 - HTML5, CSS3 responsivo e um script pequeno e opcional de busca e filtro no catálogo. Os perfis continuam acessíveis sem JavaScript.
 - RDFLib 7.6.0, em ambiente virtual, para gerar o RDF/Turtle, executar as consultas SPARQL e rodar os testes.
 
-## Instalação
+## Instalação para regenerar os dados e executar as consultas
 
 Na raiz do repositório, no PowerShell. Os comandos chamam o Python do ambiente virtual diretamente e não exigem mudar a política de execução.
 
@@ -47,14 +59,6 @@ Para executar uma consulta com outro parâmetro (ID local, `inst:ID` ou URI comp
 
 O arquivo [dados.json](exemplos/perfis/dados.json) contém os metadados do conjunto e as coleções de pessoas, unidades, cursos, disciplinas, áreas, projetos, grupos e publicações. Departamentos são unidades com tipo departamento. Os blocos de docência e discência podem coexistir na mesma pessoa, com um único identificador e uma única página. Edite os dados no JSON, a apresentação nos templates e as consultas em `consultas/`, e repita os três passos. Não edite `docs/` nem `consultas/resultados/` manualmente.
 
-## Visualização
-
-```powershell
-& .\.venv\Scripts\python.exe -B -m http.server 8000 --bind 127.0.0.1 --directory docs
-```
-
-Abra [a prévia local](http://127.0.0.1:8000/). Os links são relativos e funcionam também sob um subdiretório, como no GitHub Pages. A página `dados.html` reúne os arquivos RDF, as consultas, os resultados exportados e as ligações externas.
-
 ## Ontologia, RDF, SPARQL e LOD
 
 - [Ontologia OWL](ontologia/conecta-academico.ttl) e [grafo de instâncias](ontologia/instancias.ttl), documentados em [ontologia-aplicacao.md](documentacao/ontologia-aplicacao.md).
@@ -65,7 +69,10 @@ As consultas rodam localmente com RDFLib. Não há endpoint SPARQL público.
 
 ## Testes
 
+No PowerShell, habilite o modo UTF-8 do Python para que os testes de linha de comando leiam corretamente os acentos na saída das consultas.
+
 ```powershell
+$env:PYTHONUTF8 = '1'
 & .\.venv\Scripts\python.exe -B -m unittest discover -s testes -v
 ```
 
@@ -99,7 +106,7 @@ O comando produz o SVG a partir do DOT. A distribuição visual pode variar com 
 
 ## Situação atual
 
-As Etapas 0 a 4 estão integradas à branch principal. A Etapa 5 (consultas SPARQL, ligações LOD e revisão da interface) está implementada na branch `feat/etapa-5-sparql-lod-interface`, aguardando revisão em Pull Request. Continuam pendentes a decisão sobre a licença do conjunto, a publicação no GitHub Pages e a verificação pública das URIs. Os arquivos em `docs/` estão preparados, mas o site ainda não foi publicado. Consulte os [requisitos](proposta/requisitos.md) e a [declaração de uso de IA](documentacao/uso-ia.md).
+As etapas 0 a 5 estão implementadas. Na Etapa 5, o catálogo ganhou busca e filtros, e a página **Dados e consultas** passou a reunir os arquivos RDF, as seis consultas de competência, a consulta de ligações com o Wikidata e os resultados de demonstração. Continuam pendentes a decisão sobre a licença do conjunto, a publicação no GitHub Pages e a verificação pública das URIs. Consulte os [requisitos](proposta/requisitos.md) e a [declaração de uso de IA](documentacao/uso-ia.md).
 
 ## Integrantes
 

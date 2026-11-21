@@ -6,6 +6,8 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl> a schema:Dataset ;
+    dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+    dcterms:modified "2026-11-21"^^xsd:date ;
     ca:fonteEditorial "As correspondências externas das áreas de conhecimento apontam para itens do Wikidata, cujos dados estruturados são disponibilizados sob CC0 1.0."@pt-BR,
         "Os perfis de Ana e João foram adaptados dos modelos fictícios do professor Tiago Cruz de França para a disciplina Web Semântica da UFRRJ. Os demais perfis, a instituição, as unidades e as relações entre registros foram elaborados para esta demonstração e não descrevem pessoas ou unidades reais."@pt-BR ;
     ca:instituicaoReferencia "Universidade Demonstrativa"@pt-BR .

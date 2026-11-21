@@ -1,6 +1,7 @@
 # ConectaAcadêmico — Diretório Semântico de Perfis Universitários
 
 Trabalho final da disciplina Web Semântica da Universidade Federal Rural do Rio de Janeiro (UFRRJ), ministrada pelo professor Tiago Cruz de França.
+Publicado em: https://pedromota07.github.io/conecta-academico/
 
 ## Objetivo
 

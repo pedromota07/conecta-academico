@@ -9,7 +9,7 @@ from urllib.parse import urlsplit
 from rdflib import Graph, Literal, Namespace, URIRef
 from rdflib.namespace import DCTERMS, RDF, SKOS, XSD
 
-from validar_dados import carregar_dados
+from validar_dados import BASE_LOCAL, carregar_dados
 
 
 RAIZ = Path(__file__).resolve().parent.parent
@@ -17,7 +17,7 @@ DADOS_PADRAO = RAIZ / "exemplos" / "perfis" / "dados.json"
 ONTOLOGIA_PADRAO = RAIZ / "ontologia" / "conecta-academico.ttl"
 SAIDA_PADRAO = RAIZ / "ontologia" / "instancias.ttl"
 
-BASE = "https://pedromota07.github.io/conecta-academico/"
+BASE = BASE_LOCAL
 ONTOLOGIA = BASE + "ontologia/conecta-academico.ttl"
 DADOS = BASE + "ontologia/instancias.ttl"
 CA = Namespace(ONTOLOGIA + "#")
@@ -127,6 +127,14 @@ def _adicionar_registros(grafo, dados):
             if colecao == "areas":
                 grafo.add((sujeito, RDF.type, SKOS.Concept))
                 grafo.add((sujeito, SKOS.inScheme, ESQUEMA_AREAS))
+                _adicionar_correspondencias(grafo, sujeito, registro)
+
+
+def _adicionar_correspondencias(grafo, sujeito, area):
+    """Liga a área local ao conceito externo com a relação de mapeamento SKOS registrada."""
+    for item in area.get("correspondenciasExternas", []):
+        predicado = SKOS[item["predicado"].removeprefix("skos:")]
+        grafo.add((sujeito, predicado, _iri_externa(item["uri"])))
 
 
 def _uri_da_fonte(fonte):

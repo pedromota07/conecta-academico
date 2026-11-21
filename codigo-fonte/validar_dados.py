@@ -9,6 +9,12 @@ from urllib.parse import urlsplit
 
 
 COLECOES = ("pessoas", "unidades", "cursos", "disciplinas", "areas", "projetos", "grupos", "publicacoes")
+BASE_LOCAL = "https://pedromota07.github.io/conecta-academico/"
+# Relações de mapeamento SKOS aceitas entre uma área local e um conceito externo.
+# owl:sameAs e equivalências de classe ficam de fora de propósito.
+PREDICADOS_CORRESPONDENCIA = (
+    "skos:exactMatch", "skos:closeMatch", "skos:broadMatch", "skos:narrowMatch", "skos:relatedMatch",
+)
 FORMATO_ID = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 CARACTERES_INVALIDOS_URL = re.compile(r'[\s\x00-\x1f\x7f<>"\\]')
 ROTULO_DOMINIO = re.compile(r"[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?")
@@ -100,6 +106,16 @@ def _https(valor, caminho):
         raise ValueError(f"{caminho}: domínio ou porta HTTPS inválida.")
 
 
+def _uri_externa(valor, caminho):
+    """URI HTTP(S) de um recurso fora do namespace do projeto, na forma publicada pela fonte."""
+    partes = _uri(valor, caminho)
+    if partes.scheme not in ("http", "https") or not partes.hostname or partes.username is not None:
+        raise ValueError(f"{caminho}: informe uma URI HTTP ou HTTPS com domínio e sem credenciais.")
+    local = urlsplit(BASE_LOCAL)
+    if partes.hostname == local.hostname and partes.path.startswith(local.path):
+        raise ValueError(f"{caminho}: a correspondência deve apontar para um recurso externo ao projeto.")
+
+
 def _data(valor, caminho):
     if not isinstance(valor, str) or not re.fullmatch(r"[0-9]{4}-[0-9]{2}-[0-9]{2}", valor):
         raise ValueError(f"{caminho}: informe a data no formato AAAA-MM-DD.")
@@ -148,6 +164,14 @@ def _validar_registros(dados, tipos):
     area = referencia("areas")
     projeto = referencia("projetos")
 
+    correspondencia = _objeto({
+        "uri": _uri_externa,
+        "predicado": _opcoes(*PREDICADOS_CORRESPONDENCIA),
+        "rotulo": _texto,
+        "fonte": _https,
+        "dataVerificacao": _data,
+        "justificativa": _texto,
+    })
     docencia = _objeto(
         {"unidadesDocentes": _lista_de(unidade, minimo=1, unica=True)},
         {
@@ -188,7 +212,11 @@ def _validar_registros(dados, tipos):
         "disciplinas": _objeto({"id": _id, "nome": _texto}),
         "areas": _objeto(
             {"id": _id, "rotuloPreferido": _texto, "definicao": _texto},
-            {"rotulosAlternativos": _lista_de(_texto), "areasMaisAmplas": _lista_de(area, unica=True)},
+            {
+                "rotulosAlternativos": _lista_de(_texto),
+                "areasMaisAmplas": _lista_de(area, unica=True),
+                "correspondenciasExternas": _lista_de(correspondencia),
+            },
         ),
         "projetos": _objeto(
             {
@@ -229,10 +257,25 @@ def validar_dados(dados):
     tipos = _indexar_identificadores(dados)
     _validar_registros(dados, tipos)
 
+    alvos_exatos = {}
     for area in dados["areas"]:
         rotulos = [area["rotuloPreferido"], *area.get("rotulosAlternativos", [])]
         if len({rotulo.strip().casefold() for rotulo in rotulos}) != len(rotulos):
             raise ValueError(f"areas[{area['id']}]: os rótulos preferido e alternativos devem ser distintos.")
+        uris = [item["uri"] for item in area.get("correspondenciasExternas", [])]
+        if len(set(uris)) != len(uris):
+            raise ValueError(
+                f"areas[{area['id']}].correspondenciasExternas: cada recurso externo deve aparecer uma única vez."
+            )
+        for item in area.get("correspondenciasExternas", []):
+            if item["predicado"] != "skos:exactMatch":
+                continue
+            anterior = alvos_exatos.setdefault(item["uri"], area["id"])
+            if anterior != area["id"]:
+                raise ValueError(
+                    f"areas[{area['id']}].correspondenciasExternas: {item['uri']!r} já é correspondência exata "
+                    f"de {anterior!r}; duas áreas locais distintas não podem ser equivalentes ao mesmo recurso."
+                )
 
     hierarquia_unidades = {
         unidade["id"]: [unidade["unidadeSuperior"]] if "unidadeSuperior" in unidade else []

@@ -1,0 +1,15 @@
+{
+  "head": {
+    "vars": [
+      "unidade",
+      "nomeUnidade",
+      "pessoa",
+      "nomePessoa",
+      "vinculoDocente",
+      "vinculoDiscente"
+    ]
+  },
+  "results": {
+    "bindings": []
+  }
+}

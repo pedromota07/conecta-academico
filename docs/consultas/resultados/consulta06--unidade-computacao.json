@@ -1,0 +1,76 @@
+{
+  "head": {
+    "vars": [
+      "unidade",
+      "nomeUnidade",
+      "pessoa",
+      "nomePessoa",
+      "vinculoDocente",
+      "vinculoDiscente"
+    ]
+  },
+  "results": {
+    "bindings": [
+      {
+        "unidade": {
+          "type": "uri",
+          "value": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#unidade-computacao"
+        },
+        "nomeUnidade": {
+          "type": "literal",
+          "value": "Departamento de Computação",
+          "xml:lang": "pt-BR"
+        },
+        "pessoa": {
+          "type": "uri",
+          "value": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#pessoa-ana"
+        },
+        "nomePessoa": {
+          "type": "literal",
+          "value": "Ana Silva",
+          "xml:lang": "pt-BR"
+        },
+        "vinculoDocente": {
+          "type": "literal",
+          "value": "true",
+          "datatype": "http://www.w3.org/2001/XMLSchema#boolean"
+        },
+        "vinculoDiscente": {
+          "type": "literal",
+          "value": "false",
+          "datatype": "http://www.w3.org/2001/XMLSchema#boolean"
+        }
+      },
+      {
+        "unidade": {
+          "type": "uri",
+          "value": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#unidade-computacao"
+        },
+        "nomeUnidade": {
+          "type": "literal",
+          "value": "Departamento de Computação",
+          "xml:lang": "pt-BR"
+        },
+        "pessoa": {
+          "type": "uri",
+          "value": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#pessoa-joao"
+        },
+        "nomePessoa": {
+          "type": "literal",
+          "value": "João Pereira",
+          "xml:lang": "pt-BR"
+        },
+        "vinculoDocente": {
+          "type": "literal",
+          "value": "false",
+          "datatype": "http://www.w3.org/2001/XMLSchema#boolean"
+        },
+        "vinculoDiscente": {
+          "type": "literal",
+          "value": "true",
+          "datatype": "http://www.w3.org/2001/XMLSchema#boolean"
+        }
+      }
+    ]
+  }
+}

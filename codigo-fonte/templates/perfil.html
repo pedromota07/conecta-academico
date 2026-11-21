@@ -15,18 +15,20 @@
         <span class="brand-mark" aria-hidden="true"></span>ConectaAcadêmico
       </a>
       <nav aria-label="Navegação principal">
-        <a class="nav-link" href="${raiz}index.html#perfis">Ver perfis</a>
+        <a class="nav-link" href="${raiz}index.html#perfis">Perfis</a>
+        <a class="nav-link" href="${raiz}dados.html">Dados e consultas</a>
       </nav>
     </div>
   </header>
   <main class="shell profile-main" id="conteudo" tabindex="-1">
+    <p class="breadcrumb"><a href="${raiz}index.html#perfis">Diretório</a> <span aria-hidden="true">/</span> ${nome}</p>
     <section class="profile-heading" data-papel="${tipo_papel}" aria-labelledby="nome">
       <span class="avatar" aria-hidden="true">${iniciais}</span>
       <div class="profile-heading-content">
         <p class="role-label">${papel}</p>
         <h1 id="nome">${nome}</h1>
 ${subtitulo}
-        <p class="demo-note"><span aria-hidden="true"></span>Perfil acadêmico fictício</p>
+        <p class="demo-note">Perfil fictício de demonstração. A ${instituicao} não é uma instituição real.</p>
       </div>
     </section>
     <div class="layout">
@@ -34,17 +36,13 @@ ${subtitulo}
 ${secoes}
       </div>
       <aside class="profile-sidebar" aria-label="Informações do perfil">
-        <section class="card" aria-labelledby="vinculo-institucional">
-          <h2 id="vinculo-institucional">Vínculo institucional</h2>
-${vinculos}
-        </section>
-${links}
+${lateral}
       </aside>
     </div>
   </main>
   <footer class="site-footer shell">
-    <strong>ConectaAcadêmico</strong>
-    <span>Trabalho de Web Semântica · UFRRJ</span>
+    <span><strong>ConectaAcadêmico</strong> · Trabalho da disciplina Web Semântica (UFRRJ)</span>
+    <a href="${raiz}dados.html">Dados, ontologia e consultas SPARQL</a>
   </footer>
 </body>
 </html>

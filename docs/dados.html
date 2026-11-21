@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Ontologia, dados RDF, consultas SPARQL e ligações externas do ConectaAcadêmico.">
+  <title>Dados e consultas | ConectaAcadêmico</title>
+  <link rel="stylesheet" href="assets/estilos.css">
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="site-header">
+    <div class="header-inner shell">
+      <a class="site-title" href="index.html">
+        <span class="brand-mark" aria-hidden="true"></span>ConectaAcadêmico
+      </a>
+      <nav aria-label="Navegação principal">
+        <a class="nav-link" href="index.html#perfis">Perfis</a>
+        <a class="nav-link" href="dados.html" aria-current="page">Dados e consultas</a>
+      </nav>
+    </div>
+  </header>
+  <main class="shell data-main" id="conteudo" tabindex="-1">
+    <section class="page-intro" aria-labelledby="titulo">
+      <h1 id="titulo">Dados e consultas</h1>
+      <p>Os perfis do diretório também estão descritos em RDF. Esta página reúne os arquivos, as seis perguntas de competência com suas consultas SPARQL e as ligações das áreas de conhecimento com o Wikidata.</p>
+      <p class="demo-note">Os resultados abaixo foram exportados de uma execução local sobre o conjunto de demonstração (Universidade Demonstrativa). Não há endpoint SPARQL público.</p>
+      <nav class="page-toc" aria-label="Nesta página">
+        <a href="#arquivos">Arquivos RDF</a>
+        <a href="#consultas">Consultas SPARQL</a>
+        <a href="#ligacoes">Ligações externas</a>
+        <a href="#reproducao">Como reproduzir</a>
+      </nav>
+    </section>
+
+    <section class="data-section" aria-labelledby="arquivos">
+      <h2 id="arquivos">Arquivos RDF</h2>
+      <ul class="detailed-list">
+        <li><strong><a href="ontologia/conecta-academico.ttl">Ontologia de aplicação (OWL em Turtle)</a></strong><p>Classes, propriedades, domínios, alcances e alinhamentos. Prefixo <code>ca:</code>.</p></li>
+        <li><strong><a href="ontologia/instancias.ttl">Instâncias (RDF em Turtle)</a></strong><p>Pessoas, unidades, cursos, disciplinas, áreas, projetos, grupos e publicações gerados a partir do mesmo JSON que produz as páginas. Prefixo <code>inst:</code>.</p></li>
+      </ul>
+      <p>As URIs usam a base planejada <code>https://pedromota07.github.io/conecta-academico/</code>. A resolução dessas URIs na hospedagem pública ainda não foi verificada. A licença de reutilização do conjunto está pendente de decisão do grupo.</p>
+    </section>
+
+    <section class="data-section" aria-labelledby="consultas">
+      <h2 id="consultas">Consultas SPARQL</h2>
+      <p>Cada consulta foi executada com RDFLib sobre <code>instancias.ttl</code>, sem inferência. Os parâmetros entram como URIs; valores sem registro aparecem como “Não informado”. PC4 e PC5 percorrem relações entre tipos diferentes de entidade: projeto e pessoas, publicação e autores.</p>
+<section class="query" id="consulta01"><h3>PC1. Quais são os docentes cadastrados e seus respectivos departamentos ou unidades acadêmicas?</h3><details><summary>Ver consulta SPARQL</summary><pre><code># PC1 — Quais são os docentes cadastrados e seus respectivos departamentos
+# ou unidades acadêmicas?
+#
+# Parâmetros: nenhum. A consulta lista todos os docentes do grafo.
+# Percurso: ?docente (ca:Docente) --ca:temVinculoDocente--&gt; ?unidade.
+# Pessoas apenas discentes ficam fora porque o padrão exige o tipo ca:Docente
+# e o vínculo docente; o vínculo discente (ca:temVinculoDiscente) não é usado.
+
+PREFIX ca:     &lt;https://pedromota07.github.io/conecta-academico/ontologia/conecta-academico.ttl#&gt;
+PREFIX schema: &lt;https://schema.org/&gt;
+
+SELECT ?docente ?nomeDocente ?unidade ?nomeUnidade
+WHERE {
+  ?docente a ca:Docente ;
+           schema:name ?nomeDocente ;
+           ca:temVinculoDocente ?unidade .
+  ?unidade schema:name ?nomeUnidade .
+}
+ORDER BY ?nomeDocente ?docente ?nomeUnidade ?unidade
+</code></pre></details><div class="table-wrap" role="region" aria-label="Sem parâmetros · 2 linhas" tabindex="0"><table><caption>Sem parâmetros · 2 linhas</caption><thead><tr><th scope="col">?docente</th><th scope="col">?nomeDocente</th><th scope="col">?unidade</th><th scope="col">?nomeUnidade</th></tr></thead><tbody><tr><td><code>inst:pessoa-ana</code></td><td>Ana Silva</td><td><code>inst:unidade-computacao</code></td><td>Departamento de Computação</td></tr><tr><td><code>inst:pessoa-rafael</code></td><td>Rafael Duarte</td><td><code>inst:unidade-gestao-informacao</code></td><td>Departamento de Gestão da Informação</td></tr></tbody></table></div><p class="query-files">Arquivos: <a href="consultas/consulta01.rq">consulta01.rq</a> · <a href="consultas/resultados/consulta01.json">consulta01.json</a></p></section>
+<section class="query" id="consulta02"><h3>PC2. Quais discentes pertencem a determinado curso?</h3><details><summary>Ver consulta SPARQL</summary><pre><code># PC2 — Quais discentes pertencem a determinado curso?
+#
+# Parâmetro obrigatório: ?curso — URI de um ca:CursoGraduacao.
+#   O executor (codigo-fonte/executar_consultas.py) fornece o valor como
+#   URIRef em initBindings. Em outra ferramenta SPARQL 1.1, acrescente no
+#   início do WHERE, por exemplo:
+#     VALUES ?curso { &lt;https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#curso-sistemas-informacao&gt; }
+# Percurso: ?discente (ca:Discente) --ca:matriculadoEm--&gt; ?curso.
+# A seleção usa a identidade (URI) do curso, nunca o nome de exibição.
+
+PREFIX ca:     &lt;https://pedromota07.github.io/conecta-academico/ontologia/conecta-academico.ttl#&gt;
+PREFIX schema: &lt;https://schema.org/&gt;
+
+SELECT ?curso ?nomeCurso ?discente ?nomeDiscente
+WHERE {
+  ?curso a ca:CursoGraduacao ;
+         schema:name ?nomeCurso .
+  ?discente a ca:Discente ;
+            ca:matriculadoEm ?curso ;
+            schema:name ?nomeDiscente .
+}
+ORDER BY ?nomeDiscente ?discente
+</code></pre></details><div class="table-wrap" role="region" aria-label="?curso = inst:curso-sistemas-informacao · 1 linha" tabindex="0"><table><caption>?curso = inst:curso-sistemas-informacao · 1 linha</caption><thead><tr><th scope="col">?curso</th><th scope="col">?nomeCurso</th><th scope="col">?discente</th><th scope="col">?nomeDiscente</th></tr></thead><tbody><tr><td><code>inst:curso-sistemas-informacao</code></td><td>Bacharelado em Sistemas de Informação</td><td><code>inst:pessoa-joao</code></td><td>João Pereira</td></tr></tbody></table></div><div class="table-wrap" role="region" aria-label="?curso = inst:curso-biblioteconomia · 1 linha" tabindex="0"><table><caption>?curso = inst:curso-biblioteconomia · 1 linha</caption><thead><tr><th scope="col">?curso</th><th scope="col">?nomeCurso</th><th scope="col">?discente</th><th scope="col">?nomeDiscente</th></tr></thead><tbody><tr><td><code>inst:curso-biblioteconomia</code></td><td>Bacharelado em Biblioteconomia</td><td><code>inst:pessoa-clara</code></td><td>Clara Nunes</td></tr></tbody></table></div><p class="query-files">Arquivos: <a href="consultas/consulta02.rq">consulta02.rq</a> · <a href="consultas/resultados/consulta02--curso-sistemas-informacao.json">consulta02--curso-sistemas-informacao.json</a> · <a href="consultas/resultados/consulta02--curso-biblioteconomia.json">consulta02--curso-biblioteconomia.json</a></p></section>
+<section class="query" id="consulta03"><h3>PC3. Quais docentes atuam em determinada área de pesquisa?</h3><details><summary>Ver consulta SPARQL</summary><pre><code># PC3 — Quais docentes atuam em determinada área de pesquisa?
+#
+# Parâmetro obrigatório: ?area — URI de uma ca:AreaConhecimento (skos:Concept).
+#   Em outra ferramenta SPARQL 1.1, acrescente no início do WHERE, por exemplo:
+#     VALUES ?area { &lt;https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#area-dados-abertos&gt; }
+# Percurso: ?docente (ca:Docente) --ca:atuaEmArea--&gt; ?area.
+# ca:temInteresseEmArea (interesse discente) não é atuação docente e não é
+# consultado. Só a área registrada conta: não há expansão por skos:broader.
+
+PREFIX ca:     &lt;https://pedromota07.github.io/conecta-academico/ontologia/conecta-academico.ttl#&gt;
+PREFIX schema: &lt;https://schema.org/&gt;
+PREFIX skos:   &lt;http://www.w3.org/2004/02/skos/core#&gt;
+
+SELECT ?area ?rotuloArea ?docente ?nomeDocente
+WHERE {
+  ?area a ca:AreaConhecimento ;
+        skos:prefLabel ?rotuloArea .
+  ?docente a ca:Docente ;
+           ca:atuaEmArea ?area ;
+           schema:name ?nomeDocente .
+}
+ORDER BY ?nomeDocente ?docente
+</code></pre></details><div class="table-wrap" role="region" aria-label="?area = inst:area-dados-abertos · 1 linha" tabindex="0"><table><caption>?area = inst:area-dados-abertos · 1 linha</caption><thead><tr><th scope="col">?area</th><th scope="col">?rotuloArea</th><th scope="col">?docente</th><th scope="col">?nomeDocente</th></tr></thead><tbody><tr><td><code>inst:area-dados-abertos</code></td><td>Dados abertos</td><td><code>inst:pessoa-ana</code></td><td>Ana Silva</td></tr></tbody></table></div><div class="table-wrap" role="region" aria-label="?area = inst:area-curadoria-digital · 1 linha" tabindex="0"><table><caption>?area = inst:area-curadoria-digital · 1 linha</caption><thead><tr><th scope="col">?area</th><th scope="col">?rotuloArea</th><th scope="col">?docente</th><th scope="col">?nomeDocente</th></tr></thead><tbody><tr><td><code>inst:area-curadoria-digital</code></td><td>Curadoria digital</td><td><code>inst:pessoa-rafael</code></td><td>Rafael Duarte</td></tr></tbody></table></div><p class="query-files">Arquivos: <a href="consultas/consulta03.rq">consulta03.rq</a> · <a href="consultas/resultados/consulta03--area-dados-abertos.json">consulta03--area-dados-abertos.json</a> · <a href="consultas/resultados/consulta03--area-curadoria-digital.json">consulta03--area-curadoria-digital.json</a></p></section>
+<section class="query" id="consulta04"><h3>PC4. Quais docentes e discentes participam de um mesmo projeto de pesquisa?</h3><details><summary>Ver consulta SPARQL</summary><pre><code># PC4 — Quais docentes e discentes participam de um mesmo projeto de pesquisa?
+#
+# Parâmetros: nenhum. A consulta lista todos os pares docente/discente por projeto.
+# Percurso (relação entre tipos de entidade):
+#   ?projeto (ca:ProjetoPesquisa) --ca:temParticipante--&gt; ?docente  (ca:Docente)
+#   ?projeto (ca:ProjetoPesquisa) --ca:temParticipante--&gt; ?discente (ca:Discente)
+# As duas participações se cruzam pela mesma URI de projeto, portanto projetos
+# com títulos iguais continuam distintos. O FILTER exige duas pessoas
+# diferentes: quem acumula os dois papéis não forma um par sozinho.
+# A associação de um grupo ao projeto (ca:associadoAoProjeto) não é usada,
+# pois não comprova participação individual.
+
+PREFIX ca:      &lt;https://pedromota07.github.io/conecta-academico/ontologia/conecta-academico.ttl#&gt;
+PREFIX schema:  &lt;https://schema.org/&gt;
+PREFIX dcterms: &lt;http://purl.org/dc/terms/&gt;
+
+SELECT ?projeto ?tituloProjeto ?docente ?nomeDocente ?discente ?nomeDiscente
+WHERE {
+  ?projeto a ca:ProjetoPesquisa ;
+           dcterms:title ?tituloProjeto ;
+           ca:temParticipante ?docente , ?discente .
+  ?docente a ca:Docente ;
+           schema:name ?nomeDocente .
+  ?discente a ca:Discente ;
+            schema:name ?nomeDiscente .
+  FILTER (?docente != ?discente)
+}
+ORDER BY ?tituloProjeto ?projeto ?nomeDocente ?docente ?nomeDiscente ?discente
+</code></pre></details><div class="table-wrap" role="region" aria-label="Sem parâmetros · 1 linha" tabindex="0"><table><caption>Sem parâmetros · 1 linha</caption><thead><tr><th scope="col">?projeto</th><th scope="col">?tituloProjeto</th><th scope="col">?docente</th><th scope="col">?nomeDocente</th><th scope="col">?discente</th><th scope="col">?nomeDiscente</th></tr></thead><tbody><tr><td><code>inst:projeto-dados-abertos</code></td><td>Catálogo acadêmico de dados abertos</td><td><code>inst:pessoa-ana</code></td><td>Ana Silva</td><td><code>inst:pessoa-joao</code></td><td>João Pereira</td></tr></tbody></table></div><p class="query-files">Arquivos: <a href="consultas/consulta04.rq">consulta04.rq</a> · <a href="consultas/resultados/consulta04.json">consulta04.json</a></p></section>
+<section class="query" id="consulta05"><h3>PC5. Quais publicações estão associadas a determinado docente e quem são seus coautores, quando essa informação estiver representada?</h3><details><summary>Ver consulta SPARQL</summary><pre><code># PC5 — Quais publicações estão associadas a determinado docente e quem são
+# seus coautores, quando essa informação estiver representada?
+#
+# Parâmetro obrigatório: ?docente — URI de uma pessoa com tipo ca:Docente.
+#   Em outra ferramenta SPARQL 1.1, acrescente no início do WHERE, por exemplo:
+#     VALUES ?docente { &lt;https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#pessoa-ana&gt; }
+# Percurso (relação entre tipos de entidade):
+#   ?publicacao (ca:Publicacao) --ca:temAutor--&gt; ?docente
+#   ?publicacao (ca:Publicacao) --ca:temAutor--&gt; ?coautor (outra ca:Pessoa)
+# Usa apenas ca:temAutor. schema:author também está no grafo, com os mesmos
+# pares, mas combinar os dois predicados duplicaria linhas.
+# O FILTER fica dentro do OPTIONAL: exclui o próprio docente da lista de
+# coautores sem descartar a publicação que não tem outro autor registrado.
+# Nesse caso ?coautor fica sem valor (não associado). Ausência de registro
+# não comprova autoria exclusiva. O coautor não precisa ter perfil (papel).
+
+PREFIX ca:      &lt;https://pedromota07.github.io/conecta-academico/ontologia/conecta-academico.ttl#&gt;
+PREFIX schema:  &lt;https://schema.org/&gt;
+PREFIX dcterms: &lt;http://purl.org/dc/terms/&gt;
+
+SELECT ?docente ?nomeDocente ?publicacao ?tituloPublicacao ?ano ?coautor ?nomeCoautor
+WHERE {
+  ?docente a ca:Docente ;
+           schema:name ?nomeDocente .
+  ?publicacao a ca:Publicacao ;
+              ca:temAutor ?docente ;
+              dcterms:title ?tituloPublicacao .
+  OPTIONAL { ?publicacao ca:anoPublicacao ?ano }
+  OPTIONAL {
+    ?publicacao ca:temAutor ?coautor .
+    FILTER (?coautor != ?docente)
+    OPTIONAL { ?coautor schema:name ?nomeCoautor }
+  }
+}
+ORDER BY ?tituloPublicacao ?publicacao ?nomeCoautor ?coautor
+</code></pre></details><div class="table-wrap" role="region" aria-label="?docente = inst:pessoa-ana · 2 linhas" tabindex="0"><table><caption>?docente = inst:pessoa-ana · 2 linhas</caption><thead><tr><th scope="col">?docente</th><th scope="col">?nomeDocente</th><th scope="col">?publicacao</th><th scope="col">?tituloPublicacao</th><th scope="col">?ano</th><th scope="col">?coautor</th><th scope="col">?nomeCoautor</th></tr></thead><tbody><tr><td><code>inst:pessoa-ana</code></td><td>Ana Silva</td><td><code>inst:publicacao-dados-conectados</code></td><td>Dados conectados para descrever coleções universitárias</td><td>2024</td><td><code>inst:pessoa-rafael</code></td><td>Rafael Duarte</td></tr><tr><td><code>inst:pessoa-ana</code></td><td>Ana Silva</td><td><code>inst:publicacao-representacao-conhecimento</code></td><td>Representação do conhecimento em diretórios acadêmicos</td><td>2022</td><td class="unbound">Não informado</td><td class="unbound">Não informado</td></tr></tbody></table></div><div class="table-wrap" role="region" aria-label="?docente = inst:pessoa-rafael · 1 linha" tabindex="0"><table><caption>?docente = inst:pessoa-rafael · 1 linha</caption><thead><tr><th scope="col">?docente</th><th scope="col">?nomeDocente</th><th scope="col">?publicacao</th><th scope="col">?tituloPublicacao</th><th scope="col">?ano</th><th scope="col">?coautor</th><th scope="col">?nomeCoautor</th></tr></thead><tbody><tr><td><code>inst:pessoa-rafael</code></td><td>Rafael Duarte</td><td><code>inst:publicacao-dados-conectados</code></td><td>Dados conectados para descrever coleções universitárias</td><td>2024</td><td><code>inst:pessoa-ana</code></td><td>Ana Silva</td></tr></tbody></table></div><p class="query-files">Arquivos: <a href="consultas/consulta05.rq">consulta05.rq</a> · <a href="consultas/resultados/consulta05--pessoa-ana.json">consulta05--pessoa-ana.json</a> · <a href="consultas/resultados/consulta05--pessoa-rafael.json">consulta05--pessoa-rafael.json</a></p></section>
+<section class="query" id="consulta06"><h3>PC6. Quais pessoas estão vinculadas a uma unidade acadêmica específica, independentemente de serem docentes ou discentes?</h3><details><summary>Ver consulta SPARQL</summary><pre><code># PC6 — Quais pessoas estão vinculadas a uma unidade acadêmica específica,
+# independentemente de serem docentes ou discentes?
+#
+# Parâmetro obrigatório: ?unidade — URI de uma ca:UnidadeAcademica.
+#   Em outra ferramenta SPARQL 1.1, acrescente no início do WHERE, por exemplo:
+#     VALUES ?unidade { &lt;https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#unidade-computacao&gt; }
+# Percurso: ?pessoa --(ca:temVinculoDocente | ca:temVinculoDiscente)--&gt; ?unidade.
+# O caminho alternativo reúne os dois vínculos diretos; DISTINCT deixa uma
+# linha por pessoa, e os dois EXISTS indicam quais papéis ela tem nessa
+# unidade (xsd:boolean). ca:temUnidadeResponsavel (curso) e
+# ca:temUnidadeSuperior (hierarquia) não são vínculos de pessoas e não são
+# seguidos: consultar um instituto não traz pessoas de seus departamentos.
+
+PREFIX ca:     &lt;https://pedromota07.github.io/conecta-academico/ontologia/conecta-academico.ttl#&gt;
+PREFIX schema: &lt;https://schema.org/&gt;
+
+SELECT DISTINCT ?unidade ?nomeUnidade ?pessoa ?nomePessoa ?vinculoDocente ?vinculoDiscente
+WHERE {
+  ?unidade a ca:UnidadeAcademica ;
+           schema:name ?nomeUnidade .
+  ?pessoa ca:temVinculoDocente|ca:temVinculoDiscente ?unidade ;
+          schema:name ?nomePessoa .
+  BIND (EXISTS { ?pessoa ca:temVinculoDocente ?unidade } AS ?vinculoDocente)
+  BIND (EXISTS { ?pessoa ca:temVinculoDiscente ?unidade } AS ?vinculoDiscente)
+}
+ORDER BY ?nomePessoa ?pessoa
+</code></pre></details><div class="table-wrap" role="region" aria-label="?unidade = inst:unidade-computacao · 2 linhas" tabindex="0"><table><caption>?unidade = inst:unidade-computacao · 2 linhas</caption><thead><tr><th scope="col">?unidade</th><th scope="col">?nomeUnidade</th><th scope="col">?pessoa</th><th scope="col">?nomePessoa</th><th scope="col">?vinculoDocente</th><th scope="col">?vinculoDiscente</th></tr></thead><tbody><tr><td><code>inst:unidade-computacao</code></td><td>Departamento de Computação</td><td><code>inst:pessoa-ana</code></td><td>Ana Silva</td><td>sim</td><td>não</td></tr><tr><td><code>inst:unidade-computacao</code></td><td>Departamento de Computação</td><td><code>inst:pessoa-joao</code></td><td>João Pereira</td><td>não</td><td>sim</td></tr></tbody></table></div><div class="table-wrap" role="region" aria-label="?unidade = inst:unidade-gestao-informacao · 2 linhas" tabindex="0"><table><caption>?unidade = inst:unidade-gestao-informacao · 2 linhas</caption><thead><tr><th scope="col">?unidade</th><th scope="col">?nomeUnidade</th><th scope="col">?pessoa</th><th scope="col">?nomePessoa</th><th scope="col">?vinculoDocente</th><th scope="col">?vinculoDiscente</th></tr></thead><tbody><tr><td><code>inst:unidade-gestao-informacao</code></td><td>Departamento de Gestão da Informação</td><td><code>inst:pessoa-clara</code></td><td>Clara Nunes</td><td>não</td><td>sim</td></tr><tr><td><code>inst:unidade-gestao-informacao</code></td><td>Departamento de Gestão da Informação</td><td><code>inst:pessoa-rafael</code></td><td>Rafael Duarte</td><td>sim</td><td>não</td></tr></tbody></table></div><p class="query-empty">?unidade = inst:unidade-ciencias-exatas · 0 linhas: nenhum resultado.</p><p class="query-files">Arquivos: <a href="consultas/consulta06.rq">consulta06.rq</a> · <a href="consultas/resultados/consulta06--unidade-computacao.json">consulta06--unidade-computacao.json</a> · <a href="consultas/resultados/consulta06--unidade-gestao-informacao.json">consulta06--unidade-gestao-informacao.json</a> · <a href="consultas/resultados/consulta06--unidade-ciencias-exatas.json">consulta06--unidade-ciencias-exatas.json</a></p></section>
+<section class="query" id="ligacoes-externas"><h3>Quais áreas locais estão ligadas a recursos externos e por qual relação de mapeamento SKOS?</h3><p class="query-note">Consulta complementar, fora das seis perguntas de competência.</p><details><summary>Ver consulta SPARQL</summary><pre><code># Consulta complementar (não é uma das seis perguntas de competência).
+# Lista as ligações das áreas locais com recursos externos (LOD).
+#
+# Parâmetros: nenhum.
+# Percurso: ?area (ca:AreaConhecimento) --?relacao--&gt; ?recursoExterno, onde
+# ?relacao é uma das relações de mapeamento SKOS. O FILTER descarta alvos
+# dentro do namespace do próprio projeto.
+
+PREFIX ca:   &lt;https://pedromota07.github.io/conecta-academico/ontologia/conecta-academico.ttl#&gt;
+PREFIX skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;
+
+SELECT ?area ?rotuloArea ?relacao ?recursoExterno
+WHERE {
+  VALUES ?relacao { skos:exactMatch skos:closeMatch skos:broadMatch skos:narrowMatch skos:relatedMatch }
+  ?area a ca:AreaConhecimento ;
+        skos:prefLabel ?rotuloArea ;
+        ?relacao ?recursoExterno .
+  FILTER (isIRI(?recursoExterno)
+          &amp;&amp; !STRSTARTS(STR(?recursoExterno), &quot;https://pedromota07.github.io/conecta-academico/&quot;))
+}
+ORDER BY ?rotuloArea ?area ?relacao ?recursoExterno
+</code></pre></details><div class="table-wrap" role="region" aria-label="Sem parâmetros · 3 linhas" tabindex="0"><table><caption>Sem parâmetros · 3 linhas</caption><thead><tr><th scope="col">?area</th><th scope="col">?rotuloArea</th><th scope="col">?relacao</th><th scope="col">?recursoExterno</th></tr></thead><tbody><tr><td><code>inst:area-curadoria-digital</code></td><td>Curadoria digital</td><td><code>skos:closeMatch</code></td><td><code>http://www.wikidata.org/entity/Q5276060</code></td></tr><tr><td><code>inst:area-dados-abertos</code></td><td>Dados abertos</td><td><code>skos:closeMatch</code></td><td><code>http://www.wikidata.org/entity/Q309901</code></td></tr><tr><td><code>inst:area-web-semantica</code></td><td>Web Semântica</td><td><code>skos:closeMatch</code></td><td><code>http://www.wikidata.org/entity/Q54837</code></td></tr></tbody></table></div><p class="query-files">Arquivos: <a href="consultas/ligacoes-externas.rq">ligacoes-externas.rq</a> · <a href="consultas/resultados/ligacoes-externas.json">ligacoes-externas.json</a></p></section>
+    </section>
+
+    <section class="data-section" aria-labelledby="ligacoes">
+      <h2 id="ligacoes">Ligações externas</h2>
+      <p>As áreas de conhecimento locais são conceitos SKOS. Três delas têm correspondência com itens do Wikidata. A URI da entidade (forma canônica publicada pela fonte) é diferente da página que a descreve. Não há ligação de pessoas fictícias com identidades reais.</p>
+<ul class="detailed-list link-list"><li><strong>Dados abertos</strong> <code>inst:area-dados-abertos</code> → <code>skos:closeMatch</code> → <code>http://www.wikidata.org/entity/Q309901</code> (open data, <a href="https://www.wikidata.org/wiki/Q309901">página da fonte</a>)<p>O item descreve dados acessíveis e utilizáveis por outras pessoas e é classificado como conceito e campo de trabalho. A área local trata da publicação desses dados como tema de pesquisa. Os referentes são comparáveis, mas o recorte local é mais estreito, por isso a correspondência é próxima e não exata.</p><p class="query-files">Conferido em 21/11/2026.</p></li><li><strong>Web Semântica</strong> <code>inst:area-web-semantica</code> → <code>skos:closeMatch</code> → <code>http://www.wikidata.org/entity/Q54837</code> (Semantic Web, <a href="https://www.wikidata.org/wiki/Q54837">página da fonte</a>)<p>O item é classificado como campo de estudo e disciplina acadêmica, além de descrever a extensão da Web para troca de dados. A área local corresponde ao campo de estudo. Como o item externo também abrange a tecnologia, a correspondência é próxima e não exata.</p><p class="query-files">Conferido em 21/11/2026.</p></li><li><strong>Curadoria digital</strong> <code>inst:area-curadoria-digital</code> → <code>skos:closeMatch</code> → <code>http://www.wikidata.org/entity/Q5276060</code> (digital curation, <a href="https://www.wikidata.org/wiki/Q5276060">página da fonte</a>)<p>O item descreve seleção, preservação, manutenção, coleta e arquivamento de ativos digitais e é subclasse de curadoria. A definição local cobre seleção, documentação e preservação. Os conceitos são muito próximos, mas a correspondência próxima evita propagar equivalências por transitividade.</p><p class="query-files">Conferido em 21/11/2026.</p></li></ul>
+      <p>Os dados estruturados do Wikidata estão disponíveis sob CC0 1.0. Os textos das páginas seguem outra licença (<a href="https://www.wikidata.org/wiki/Wikidata:Licensing">condições de uso do Wikidata</a>).</p>
+    </section>
+
+    <section class="data-section" aria-labelledby="reproducao">
+      <h2 id="reproducao">Como reproduzir</h2>
+      <p>No repositório, com Python 3.10 ou superior e o ambiente virtual instalado:</p>
+      <pre><code>python -B codigo-fonte/gerar_rdf.py --publicaveis docs/ontologia
+python -B codigo-fonte/executar_consultas.py
+python -B codigo-fonte/executar_consultas.py consulta02 --param curso=curso-biblioteconomia
+python -B codigo-fonte/gerar_site.py</code></pre>
+      <p>A explicação de cada consulta está em <code>documentacao/consultas-sparql.md</code> e a das ligações em <code>documentacao/ligacoes-externas.md</code>, no <a href="https://github.com/pedromota07/conecta-academico">repositório do projeto</a>.</p>
+    </section>
+  </main>
+  <footer class="site-footer shell">
+    <span><strong>ConectaAcadêmico</strong> · Trabalho da disciplina Web Semântica (UFRRJ)</span>
+    <a href="index.html#perfis">Voltar aos perfis</a>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,34 @@
+{
+  "head": {
+    "vars": [
+      "curso",
+      "nomeCurso",
+      "discente",
+      "nomeDiscente"
+    ]
+  },
+  "results": {
+    "bindings": [
+      {
+        "curso": {
+          "type": "uri",
+          "value": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#curso-biblioteconomia"
+        },
+        "nomeCurso": {
+          "type": "literal",
+          "value": "Bacharelado em Biblioteconomia",
+          "xml:lang": "pt-BR"
+        },
+        "discente": {
+          "type": "uri",
+          "value": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#pessoa-clara"
+        },
+        "nomeDiscente": {
+          "type": "literal",
+          "value": "Clara Nunes",
+          "xml:lang": "pt-BR"
+        }
+      }
+    ]
+  }
+}

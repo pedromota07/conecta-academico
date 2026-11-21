@@ -1,0 +1,26 @@
+# PC6 — Quais pessoas estão vinculadas a uma unidade acadêmica específica,
+# independentemente de serem docentes ou discentes?
+#
+# Parâmetro obrigatório: ?unidade — URI de uma ca:UnidadeAcademica.
+#   Em outra ferramenta SPARQL 1.1, acrescente no início do WHERE, por exemplo:
+#     VALUES ?unidade { <https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#unidade-computacao> }
+# Percurso: ?pessoa --(ca:temVinculoDocente | ca:temVinculoDiscente)--> ?unidade.
+# O caminho alternativo reúne os dois vínculos diretos; DISTINCT deixa uma
+# linha por pessoa, e os dois EXISTS indicam quais papéis ela tem nessa
+# unidade (xsd:boolean). ca:temUnidadeResponsavel (curso) e
+# ca:temUnidadeSuperior (hierarquia) não são vínculos de pessoas e não são
+# seguidos: consultar um instituto não traz pessoas de seus departamentos.
+
+PREFIX ca:     <https://pedromota07.github.io/conecta-academico/ontologia/conecta-academico.ttl#>
+PREFIX schema: <https://schema.org/>
+
+SELECT DISTINCT ?unidade ?nomeUnidade ?pessoa ?nomePessoa ?vinculoDocente ?vinculoDiscente
+WHERE {
+  ?unidade a ca:UnidadeAcademica ;
+           schema:name ?nomeUnidade .
+  ?pessoa ca:temVinculoDocente|ca:temVinculoDiscente ?unidade ;
+          schema:name ?nomePessoa .
+  BIND (EXISTS { ?pessoa ca:temVinculoDocente ?unidade } AS ?vinculoDocente)
+  BIND (EXISTS { ?pessoa ca:temVinculoDiscente ?unidade } AS ?vinculoDiscente)
+}
+ORDER BY ?nomePessoa ?pessoa

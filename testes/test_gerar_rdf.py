@@ -347,11 +347,13 @@ class TesteRDF(unittest.TestCase):
         self.assertIn((DADOS[dados["publicacoes"][0]["id"]], SCHEMA.author, recurso), grafo)
 
     def test_geracao_rdf_preserva_html_e_regeneracao_do_site(self):
+        # Todo o conteúdo de docs/ (páginas, assets, RDF, consultas e resultados)
+        # deve coincidir com uma geração limpa a partir das fontes versionadas.
         pasta_site = RAIZ / "docs"
         existentes = {
             caminho.relative_to(pasta_site): caminho.read_bytes()
             for caminho in pasta_site.rglob("*")
-            if caminho.suffix in (".html", ".css")
+            if caminho.is_file()
         }
         self.gerar_em_temporario()
         with TemporaryDirectory() as temporario:

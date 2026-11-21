@@ -1,0 +1,45 @@
+{
+  "head": {
+    "vars": [
+      "projeto",
+      "tituloProjeto",
+      "docente",
+      "nomeDocente",
+      "discente",
+      "nomeDiscente"
+    ]
+  },
+  "results": {
+    "bindings": [
+      {
+        "projeto": {
+          "type": "uri",
+          "value": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#projeto-dados-abertos"
+        },
+        "tituloProjeto": {
+          "type": "literal",
+          "value": "Catálogo acadêmico de dados abertos",
+          "xml:lang": "pt-BR"
+        },
+        "docente": {
+          "type": "uri",
+          "value": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#pessoa-ana"
+        },
+        "nomeDocente": {
+          "type": "literal",
+          "value": "Ana Silva",
+          "xml:lang": "pt-BR"
+        },
+        "discente": {
+          "type": "uri",
+          "value": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#pessoa-joao"
+        },
+        "nomeDiscente": {
+          "type": "literal",
+          "value": "João Pereira",
+          "xml:lang": "pt-BR"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "head": {
+    "vars": [
+      "docente",
+      "nomeDocente",
+      "publicacao",
+      "tituloPublicacao",
+      "ano",
+      "coautor",
+      "nomeCoautor"
+    ]
+  },
+  "results": {
+    "bindings": [
+      {
+        "docente": {
+          "type": "uri",
+          "value": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#pessoa-ana"
+        },
+        "nomeDocente": {
+          "type": "literal",
+          "value": "Ana Silva",
+          "xml:lang": "pt-BR"
+        },
+        "publicacao": {
+          "type": "uri",
+          "value": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#publicacao-dados-conectados"
+        },
+        "tituloPublicacao": {
+          "type": "literal",
+          "value": "Dados conectados para descrever coleções universitárias",
+          "xml:lang": "pt-BR"
+        },
+        "ano": {
+          "type": "literal",
+          "value": "2024",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+        },
+        "coautor": {
+          "type": "uri",
+          "value": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#pessoa-rafael"
+        },
+        "nomeCoautor": {
+          "type": "literal",
+          "value": "Rafael Duarte",
+          "xml:lang": "pt-BR"
+        }
+      },
+      {
+        "docente": {
+          "type": "uri",
+          "value": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#pessoa-ana"
+        },
+        "nomeDocente": {
+          "type": "literal",
+          "value": "Ana Silva",
+          "xml:lang": "pt-BR"
+        },
+        "publicacao": {
+          "type": "uri",
+          "value": "https://pedromota07.github.io/conecta-academico/ontologia/instancias.ttl#publicacao-representacao-conhecimento"
+        },
+        "tituloPublicacao": {
+          "type": "literal",
+          "value": "Representação do conhecimento em diretórios acadêmicos",
+          "xml:lang": "pt-BR"
+        },
+        "ano": {
+          "type": "literal",
+          "value": "2022",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      }
+    ]
+  }
+}

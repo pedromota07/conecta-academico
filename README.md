@@ -106,8 +106,8 @@ dot -Tsvg "documentacao/diagrama-conceitual.dot" -o "documentacao/diagrama-conce
 O comando produz o SVG a partir do DOT. A distribuição visual pode variar com a versão e as fontes disponíveis; após regenerar, confira a legibilidade, as 15 relações (R01–R15) e as multiplicidades. O SVG versionado também possui atributos de acessibilidade e descrição textual (`role`, `aria-labelledby`, `title` e `desc`), que podem precisar ser reaplicados à saída do Graphviz. A ferramenta não estava instalada no terminal utilizado na auditoria da Etapa 2; portanto, a regeneração por esse comando ainda não foi executada nesse ambiente.
 
 ## Situação atual
-
-As etapas 0 a 5 estão implementadas. Na Etapa 5, o catálogo ganhou busca e filtros, e a página **Dados e consultas** passou a reunir os arquivos RDF, as seis consultas de competência, a consulta de ligações com o Wikidata e os resultados de demonstração. Continuam pendentes a decisão sobre a licença do conjunto, a publicação no GitHub Pages e a verificação pública das URIs. Consulte os [requisitos](proposta/requisitos.md) e a [declaração de uso de IA](documentacao/uso-ia.md).
+Licença utilizada CCBY 4.0, publicação feita no GitHub Pages e a verificação pública das URIs. 
+Consulte os [requisitos](proposta/requisitos.md) e a [declaração de uso de IA](documentacao/uso-ia.md).
 
 ## Integrantes
 

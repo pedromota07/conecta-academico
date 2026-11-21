@@ -4,61 +4,85 @@ Trabalho final da disciplina Web Semântica da Universidade Federal Rural do Rio
 
 ## Objetivo
 
-O ConectaAcadêmico é um diretório estático de perfis docentes e discentes. Os quatro perfis desta demonstração usam dados fictícios e foram preparados a partir dos modelos HTML e CSS fornecidos pelo professor.
+O ConectaAcadêmico é um diretório estático de perfis docentes e discentes. Os quatro perfis desta demonstração, a instituição (Universidade Demonstrativa) e suas unidades são fictícios. A apresentação partiu dos modelos HTML e CSS fornecidos pelo professor.
 
 ## Tecnologias implementadas
 
-- JSON como fonte editorial dos perfis e dos recursos acadêmicos relacionados.
-- Python 3.10 ou superior e biblioteca padrão para validar os dados, gerar o site e executar os testes.
-- HTML5 e CSS3 responsivo para a navegação estática no navegador.
-- RDFLib em ambiente virtual para gerar e testar o RDF/Turtle.
+- JSON como fonte editorial única dos perfis, dos recursos acadêmicos e das ligações externas.
+- Python 3.10 ou superior e biblioteca padrão para validar os dados e gerar o site.
+- HTML5, CSS3 responsivo e um script pequeno e opcional de busca e filtro no catálogo. Os perfis continuam acessíveis sem JavaScript.
+- RDFLib 7.6.0, em ambiente virtual, para gerar o RDF/Turtle, executar as consultas SPARQL e rodar os testes.
 
-## Dados e execução local
+## Instalação
 
-O arquivo [dados.json](exemplos/perfis/dados.json) contém os metadados do conjunto e as coleções de pessoas, unidades, cursos, disciplinas, áreas, projetos, grupos e publicações. Departamentos são unidades com tipo departamento. Os blocos de docência e discência podem coexistir na mesma pessoa, com um único identificador e uma única página. Referências por identificador representam as relações R01–R15.
-
-Execute o gerador a partir da raiz do repositório.
+Na raiz do repositório, no PowerShell. Os comandos chamam o Python do ambiente virtual diretamente e não exigem mudar a política de execução.
 
 ```powershell
-python -B codigo-fonte/gerar_site.py
+python -m venv .venv
+& .\.venv\Scripts\python.exe -m pip install -r requirements-rdf.txt
 ```
 
-O comando valida o JSON e gera o catálogo, os perfis e a folha de estilos em [docs/](docs/index.html). Edite os dados no JSON e a apresentação nos templates. Execute a geração novamente para atualizar a saída a partir dessas fontes.
+## Geração e consultas
 
-Para visualizar o site, abra [docs/index.html](docs/index.html) no navegador. O comando a seguir simula a hospedagem estática.
+Execute na ordem abaixo. Cada etapa usa a saída da anterior.
 
 ```powershell
-python -B -m http.server 8000 --bind 127.0.0.1 --directory docs
+# 1. Valida o JSON e gera ontologia/instancias.ttl (e as cópias em docs/ontologia)
+& .\.venv\Scripts\python.exe -B codigo-fonte/gerar_rdf.py --publicaveis docs/ontologia
+
+# 2. Executa as seis consultas e a consulta de ligações com os parâmetros de demonstração
+& .\.venv\Scripts\python.exe -B codigo-fonte/executar_consultas.py
+
+# 3. Gera catálogo, perfis e a página "Dados e consultas" em docs/
+& .\.venv\Scripts\python.exe -B codigo-fonte/gerar_site.py
 ```
 
-Com o servidor rodando, abra [a prévia local](http://127.0.0.1:8000/). Os caminhos relativos também funcionam sob um subdiretório.
-
-## Ontologia e RDF
-
-A [ontologia OWL](ontologia/conecta-academico.ttl) e o [grafo de instâncias](ontologia/instancias.ttl) seguem o modelo aprovado. A [documentação da ontologia](documentacao/ontologia-aplicacao.md) explica as URIs previstas, os caminhos para PC1–PC6 e os comandos de instalação, geração, preparação das cópias estáticas e teste da Etapa 4.
-
-## Testes do site
+Para executar uma consulta com outro parâmetro (ID local, `inst:ID` ou URI completa):
 
 ```powershell
-python -B -m unittest discover -s testes -p "test_gerar_site.py" -v
+& .\.venv\Scripts\python.exe -B codigo-fonte/executar_consultas.py --listar
+& .\.venv\Scripts\python.exe -B codigo-fonte/executar_consultas.py consulta02 --param curso=curso-biblioteconomia
+& .\.venv\Scripts\python.exe -B codigo-fonte/executar_consultas.py consulta06 --param unidade=unidade-gestao-informacao --json
 ```
 
-Os testes geram a saída em diretórios temporários e verificam páginas, links, papéis acadêmicos, rejeição de dados inválidos e cobertura dos cenários PC1–PC6. O teste de um quinto perfil usa uma cópia dos dados.
+O arquivo [dados.json](exemplos/perfis/dados.json) contém os metadados do conjunto e as coleções de pessoas, unidades, cursos, disciplinas, áreas, projetos, grupos e publicações. Departamentos são unidades com tipo departamento. Os blocos de docência e discência podem coexistir na mesma pessoa, com um único identificador e uma única página. Edite os dados no JSON, a apresentação nos templates e as consultas em `consultas/`, e repita os três passos. Não edite `docs/` nem `consultas/resultados/` manualmente.
+
+## Visualização
+
+```powershell
+& .\.venv\Scripts\python.exe -B -m http.server 8000 --bind 127.0.0.1 --directory docs
+```
+
+Abra [a prévia local](http://127.0.0.1:8000/). Os links são relativos e funcionam também sob um subdiretório, como no GitHub Pages. A página `dados.html` reúne os arquivos RDF, as consultas, os resultados exportados e as ligações externas.
+
+## Ontologia, RDF, SPARQL e LOD
+
+- [Ontologia OWL](ontologia/conecta-academico.ttl) e [grafo de instâncias](ontologia/instancias.ttl), documentados em [ontologia-aplicacao.md](documentacao/ontologia-aplicacao.md).
+- [Consultas SPARQL](consultas/) e [resultados](consultas/resultados/README.md), explicados em [consultas-sparql.md](documentacao/consultas-sparql.md).
+- Três ligações `skos:closeMatch` entre áreas de conhecimento e itens do Wikidata, justificadas em [ligacoes-externas.md](documentacao/ligacoes-externas.md).
+
+As consultas rodam localmente com RDFLib. Não há endpoint SPARQL público.
+
+## Testes
+
+```powershell
+& .\.venv\Scripts\python.exe -B -m unittest discover -s testes -v
+```
+
+Os testes geram as saídas em diretórios temporários e verificam páginas, links, papéis acadêmicos, rejeição de dados inválidos, a ontologia e o RDF, a execução dos seis arquivos `.rq` com variações de parâmetros e casos adversariais (homônimos, pessoa com dois papéis, projetos de mesmo título, autor sem perfil), as ligações externas e a correspondência entre `docs/` e uma geração limpa. Não acessam a Internet.
 
 ## Estrutura
 
 | Diretório | Finalidade |
 | --- | --- |
-| `proposta/` | Proposta, requisitos e decisões de modelagem. |
-| `documentacao/` | Dicionário de dados, vocabulários, documentação da ontologia e declaração de uso de IA. |
+| `proposta/` | Escopo, requisitos, perguntas de competência e rastreabilidade. |
+| `documentacao/` | Dicionário de dados, vocabulários, ontologia, consultas SPARQL, ligações externas e declaração de uso de IA. |
 | `exemplos/perfis/` | Fonte JSON dos registros da demonstração. |
-| `ontologia/` | Arquivos da ontologia e dos dados RDF. |
-| `consultas/` e `consultas/resultados/` | Consultas SPARQL e evidências de execução. |
-| `codigo-fonte/` | Validador, gerador, templates e estilos. |
-| `testes/` | Testes da aplicação e dos dados. |
+| `ontologia/` | Ontologia OWL e dados RDF em Turtle. |
+| `consultas/` e `consultas/resultados/` | Consultas SPARQL e evidências de execução (SPARQL Results JSON). |
+| `codigo-fonte/` | Validador, geradores, executor das consultas, templates, estilos e script do catálogo. |
+| `testes/` | Testes do site, do RDF, das consultas e das ligações externas. |
 | `docs/` | Saída estática gerada para futura hospedagem. |
-
-O Git passará a representar os diretórios vazios quando eles receberem arquivos versionados.
 
 ## Modelo conceitual e reprodução do diagrama
 
@@ -75,7 +99,7 @@ O comando produz o SVG a partir do DOT. A distribuição visual pode variar com 
 
 ## Situação atual
 
-As Etapas 0 a 4 estão concluídas e integradas à branch principal, incluindo o diretório estático, a ontologia OWL e a geração de dados RDF/Turtle. As consultas SPARQL, as ligações externas LOD, a aprovação da licença e a hospedagem pública do site ficam para as próximas etapas. Consulte os [requisitos](proposta/requisitos.md) e a [declaração de uso de IA](documentacao/uso-ia.md).
+As Etapas 0 a 4 estão integradas à branch principal. A Etapa 5 (consultas SPARQL, ligações LOD e revisão da interface) está implementada na branch `feat/etapa-5-sparql-lod-interface`, aguardando revisão em Pull Request. Continuam pendentes a decisão sobre a licença do conjunto, a publicação no GitHub Pages e a verificação pública das URIs. Os arquivos em `docs/` estão preparados, mas o site ainda não foi publicado. Consulte os [requisitos](proposta/requisitos.md) e a [declaração de uso de IA](documentacao/uso-ia.md).
 
 ## Integrantes
 

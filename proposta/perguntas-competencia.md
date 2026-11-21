@@ -15,4 +15,17 @@ As perguntas abaixo seguem a seção 5 do enunciado. As entidades e relações s
 
 Com quatro perfis, é possível atender aos seis cenários. A proposta usa dois cursos, duas unidades e duas áreas para distinguir os filtros. Um dos docentes e um dos discentes compartilham unidade e projeto. O segundo projeto pode ter somente o outro docente. Para a coautoria, dois dos perfis já cadastrados podem compartilhar uma publicação fictícia.
 
-PC4 e PC5 serão usadas para evidenciar o requisito de pelo menos duas consultas que explorem relações entre tipos de entidade. A primeira atravessa as participações no projeto e a segunda percorre a autoria compartilhada de uma publicação. Para cada pergunta, a entrega futura deverá incluir a consulta, parâmetros utilizados, resultado obtido e explicação das classes e propriedades. Os casos de aceitação acima servirão para comparar os resultados ao esperado.
+PC4 e PC5 evidenciam o requisito de pelo menos duas consultas que explorem relações entre tipos de entidade. A primeira atravessa as participações de pessoas no projeto e a segunda percorre a autoria compartilhada de uma publicação.
+
+## Implementação e evidências (Etapa 5)
+
+| Pergunta | Consulta | Parâmetros de demonstração | Resultado obtido |
+| --- | --- | --- | --- |
+| PC1 | [consulta01.rq](../consultas/consulta01.rq) | — | Ana → Departamento de Computação; Rafael → Departamento de Gestão da Informação |
+| PC2 | [consulta02.rq](../consultas/consulta02.rq) | `curso-sistemas-informacao`, `curso-biblioteconomia` | João; Clara |
+| PC3 | [consulta03.rq](../consultas/consulta03.rq) | `area-dados-abertos`, `area-curadoria-digital` | Ana (o interesse de João não conta); Rafael |
+| PC4 | [consulta04.rq](../consultas/consulta04.rq) | — | Projeto Catálogo acadêmico de dados abertos: Ana e João |
+| PC5 | [consulta05.rq](../consultas/consulta05.rq) | `pessoa-ana`, `pessoa-rafael` | Ana: obra com Rafael e obra sem coautor registrado; Rafael: obra com Ana |
+| PC6 | [consulta06.rq](../consultas/consulta06.rq) | `unidade-computacao`, `unidade-gestao-informacao`, `unidade-ciencias-exatas` | Ana e João; Rafael e Clara; nenhum (vínculo direto) |
+
+Os resultados completos estão em [consultas/resultados/](../consultas/resultados/README.md) e as explicações em [consultas-sparql.md](../documentacao/consultas-sparql.md).

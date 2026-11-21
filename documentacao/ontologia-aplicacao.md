@@ -61,6 +61,8 @@ Cada referência editorial vira uma ligação para a URI do registro identificad
 
 `skos:broader` e `schema:author` são emitidos explicitamente junto de R11 e R15, para consumo direto sem configuração de inferência. Os demais alinhamentos da tabela estão nos axiomas da ontologia. O grafo também usa `skos:inScheme` para associar as áreas ao esquema local. A hierarquia SKOS relaciona conceitos, e as especializações OWL relacionam classes. Matrícula atual tem predicado próprio. [Schema.org affiliation](https://schema.org/affiliation), [Schema.org hasCourse](https://schema.org/hasCourse), [Schema.org author](https://schema.org/author), [SKOS Reference](https://www.w3.org/TR/skos-reference/)
 
+As áreas podem ter ligações com conceitos externos por `skos:exactMatch`, `skos:closeMatch`, `skos:broadMatch`, `skos:narrowMatch` ou `skos:relatedMatch`, geradas a partir de `correspondenciasExternas` no JSON. A ontologia declara essas cinco propriedades SKOS como `owl:ObjectProperty`, sem redefinir domínio ou alcance. Os dados atuais usam três `skos:closeMatch` para itens do Wikidata ([ligações externas](ligacoes-externas.md)). `owl:sameAs` continua fora do modelo.
+
 Os links opcionais `ca:linkAcademico` e `ca:linkBibliografico` partem de `ca:Pessoa` e `ca:Publicacao`, respectivamente, e têm alcance `owl:Thing`. Seus valores são recursos identificados por IRI e só aparecem quando registrados na fonte.
 
 ## Valores e metadados
@@ -85,9 +87,9 @@ As propriedades de dados locais que aceitam texto com idioma têm alcance `rdf:P
 
 A ontologia declara classes, hierarquias, subpropriedades, domínios, alcances e anotações. `ca:temUnidadeSuperior` é irreflexiva porque uma unidade não pode ser sua própria superior imediata. Docência e discência são compatíveis. O validador JSON continua verificando formato e unicidade dos IDs, preenchimento, cardinalidades, referências e ausência de ciclos. Em OWL, domínio e alcance permitem inferir tipos. Sob a hipótese de mundo aberto, ausência de uma tripla não implica que o fato seja falso. [OWL 2 Primer](https://www.w3.org/TR/owl2-primer/)
 
-## Referência para as consultas da Etapa 5
+## Percursos usados nas consultas
 
-Caio pode usar diretamente o [Turtle das instâncias](../ontologia/instancias.ttl). As URIs completas das classes são compostas do namespace `ca:` seguido dos nomes na tabela de classes. Os predicados locais da tabela R01–R15 já constam no grafo.
+As seis consultas da Etapa 5 estão em [`consultas/`](../consultas/) e são explicadas em [consultas-sparql.md](consultas-sparql.md). Elas usam o [Turtle das instâncias](../ontologia/instancias.ttl) e os percursos abaixo.
 
 | Pergunta | Percurso no RDF e cuidados |
 | --- | --- |
@@ -108,11 +110,13 @@ Na raiz do repositório, use um ambiente Python 3.10 ou superior. Os comandos ab
 python -m venv .venv
 & .\.venv\Scripts\python.exe -m pip install -r requirements-rdf.txt
 & .\.venv\Scripts\python.exe -B codigo-fonte/gerar_rdf.py --publicaveis docs/ontologia
+& .\.venv\Scripts\python.exe -B codigo-fonte/executar_consultas.py
+& .\.venv\Scripts\python.exe -B codigo-fonte/gerar_site.py
 & .\.venv\Scripts\python.exe -B -m unittest discover -s testes -v
 ```
 
-O gerador usa o validador editorial já usado pelo site, regrava `ontologia/instancias.ttl` e, com `--publicaveis`, copia a ontologia e as instâncias para `docs/ontologia/`. Edite a ontologia canônica em `ontologia/` e os registros em JSON. As cópias públicas são produzidas pelo mesmo comando. O gerador RDF não regrava as páginas HTML.
+O gerador usa o validador editorial já usado pelo site, regrava `ontologia/instancias.ttl` e, com `--publicaveis`, copia a ontologia e as instâncias para `docs/ontologia/`. Edite a ontologia canônica em `ontologia/` e os registros em JSON. O gerador RDF não regrava as páginas HTML. O gerador do site também copia os dois arquivos Turtle para `docs/ontologia/`, junto das consultas e dos resultados usados pela página `dados.html`, por isso deve rodar depois do RDF e das consultas.
 
-Na auditoria, o RDFLib 7.6.0 leu 193 triplas da ontologia e 202 das instâncias. A OWLAPI 3.4.3 confirmou o perfil OWL 2 DL da ontologia canônica. O Pellet 2.3.1, executado com Owlready2 0.51 e OpenJDK 25, analisou a união dos grafos locais e não encontrou inconsistências ou classes insatisfatíveis. Essa análise usou somente os axiomas locais e as afirmações geradas. As verificações editoriais permanecem no validador JSON.
+Na auditoria da Etapa 4, o RDFLib 7.6.0 leu 193 triplas da ontologia e 202 das instâncias. Na Etapa 5, a declaração das cinco propriedades de mapeamento SKOS e as três ligações externas acrescentaram triplas aos dois arquivos; os testes não fixam essas contagens. A análise OWLAPI/Pellet descrita a seguir foi feita na Etapa 4 e não foi repetida nesta etapa. A OWLAPI 3.4.3 confirmou o perfil OWL 2 DL da ontologia canônica. O Pellet 2.3.1, executado com Owlready2 0.51 e OpenJDK 25, analisou a união dos grafos locais e não encontrou inconsistências ou classes insatisfatíveis. Essa análise usou somente os axiomas locais e as afirmações geradas. As verificações editoriais permanecem no validador JSON.
 
-Pendências para as próximas etapas incluem as consultas SPARQL e seus resultados, a revisão da licença, a seleção de pelo menos três recursos externos com relações justificadas e a publicação com verificação das URIs previstas.
+Pendências para as próximas etapas: decisão sobre a licença do conjunto e publicação no GitHub Pages com verificação da resolução das URIs previstas. As consultas SPARQL e as ligações externas foram implementadas na Etapa 5.

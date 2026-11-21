@@ -263,8 +263,18 @@ class TesteRDF(unittest.TestCase):
             set(self.grafo.objects(DOCUMENTO_DADOS, CA.fonteEditorial)),
             {texto(fonte) for fonte in self.json["fontes"]},
         )
-        for predicado in (DCTERMS.source, DCTERMS.license, DCTERMS.modified):
-            self.assertFalse(set(self.grafo.objects(DOCUMENTO_DADOS, predicado)))
+        # Licença e data só existem no grafo quando declaradas no JSON; nada além disso é inventado.
+        licenca = {URIRef(self.json["licenca"])} if "licenca" in self.json else set()
+        self.assertEqual(set(self.grafo.objects(DOCUMENTO_DADOS, DCTERMS.license)), licenca)
+        modificado = (
+            {Literal(self.json["dataAtualizacao"], datatype=XSD.date)}
+            if "dataAtualizacao" in self.json
+            else set()
+        )
+        self.assertEqual(set(self.grafo.objects(DOCUMENTO_DADOS, DCTERMS.modified)), modificado)
+        # dcterms:source só pode vir de fontes do JSON que sejam URIs.
+        fontes_uri = {URIRef(fonte) for fonte in self.json["fontes"]}
+        self.assertLessEqual(set(self.grafo.objects(DOCUMENTO_DADOS, DCTERMS.source)), fontes_uri)
 
     def test_dataset_sem_identidades_externas_ou_matriculas_com_alumni_of(self):
         for predicado in (OWL.sameAs, SCHEMA.sameAs, SCHEMA.alumniOf):

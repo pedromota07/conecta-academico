@@ -32,7 +32,8 @@ Abra a [prévia local](http://127.0.0.1:8000/). Para regenerar o site, executar 
 
 - [Ontologia OWL](ontologia/conecta-academico.ttl), [instâncias RDF](ontologia/instancias.ttl) e [modelo de dados](documentacao/ontologia-aplicacao.md).
 - [Consultas SPARQL](consultas/), [resultados](consultas/resultados/README.md) e [ligações ao Wikidata](documentacao/ligacoes-externas.md).
-- [Requisitos da disciplina](proposta/requisitos.md), [modelo conceitual](documentacao/decisoes-modelagem.md) e [declaração de uso de IA](documentacao/uso-ia.md).
+- [Proposta](proposta/escopo.md), [requisitos da disciplina](proposta/requisitos.md) e [perguntas de competência](proposta/perguntas-competencia.md).
+- [Diagrama conceitual](documentacao/diagrama-conceitual.svg), [pesquisa de vocabulários](documentacao/pesquisa-vocabularios.md) e [declaração de uso de IA](documentacao/uso-ia.md).
 
 ## Créditos e licença
 

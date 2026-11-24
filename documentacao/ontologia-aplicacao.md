@@ -15,7 +15,7 @@ A base HTTPS prevista é `https://pedromota07.github.io/conecta-academico/`. Os 
 | Página de perfil | `perfis/` + `id` do JSON + `.html` | [Perfil HTML de Ana](../docs/perfis/pessoa-ana.html) |
 | Esquema conceitual SKOS | `ontologia/instancias.ttl#esquema/areas` | O caractere `/` no fragmento separa o esquema dos IDs editoriais. |
 
-As URIs com fragmento levam ao arquivo Turtle correspondente quando a hospedagem estiver ativa. Assim, a resolução estática dispensa reescritas HTTP. A identidade do recurso deriva do identificador estável do JSON. A página HTML é um recurso distinto, relacionado à pessoa por `schema:mainEntityOfPage` e tipado como `schema:ProfilePage`. Pessoas sem papel acadêmico registrado podem aparecer como autoras ou participantes, sem gerar página. [Schema.org mainEntityOfPage](https://schema.org/mainEntityOfPage), [Schema.org ProfilePage](https://schema.org/ProfilePage)
+As URIs com fragmento resolvem para o arquivo Turtle correspondente no GitHub Pages. Assim, a resolução estática dispensa reescritas HTTP. A identidade do recurso deriva do identificador estável do JSON. A página HTML é um recurso distinto, relacionado à pessoa por `schema:mainEntityOfPage` e tipado como `schema:ProfilePage`. Pessoas sem papel acadêmico registrado podem aparecer como autoras ou participantes, sem gerar página. [Schema.org mainEntityOfPage](https://schema.org/mainEntityOfPage), [Schema.org ProfilePage](https://schema.org/ProfilePage)
 
 ## Classes
 
@@ -59,7 +59,7 @@ Cada referência editorial vira uma ligação para a URI do registro identificad
 | R14 | `ca:associadoAoProjeto` | GrupoPesquisa → ProjetoPesquisa | `projetos` | — |
 | R15 | `ca:temAutor` | Publicacao → Pessoa | `autores` | `schema:author` |
 
-`skos:broader` e `schema:author` são emitidos explicitamente junto de R11 e R15, para consumo direto sem configuração de inferência. Os demais alinhamentos da tabela estão nos axiomas da ontologia. O grafo também usa `skos:inScheme` para associar as áreas ao esquema local. A hierarquia SKOS relaciona conceitos, e as especializações OWL relacionam classes. Matrícula atual tem predicado próprio. [Schema.org affiliation](https://schema.org/affiliation), [Schema.org hasCourse](https://schema.org/hasCourse), [Schema.org author](https://schema.org/author), [SKOS Reference](https://www.w3.org/TR/skos-reference/)
+`skos:broader` e `schema:author` são emitidos explicitamente junto de R11 e R15, para consumo direto sem configuração de inferência. Os demais alinhamentos da tabela estão nos axiomas da ontologia. O grafo também usa `skos:inScheme` para associar as áreas ao esquema local. A hierarquia SKOS relaciona conceitos, e as especializações OWL relacionam classes. Matrícula atual tem predicado próprio. `schema:alumniOf` cobre vínculo de ex-aluno e `aiiso:teaches` parte de uma organização, por isso a ontologia usa relações locais para matrícula e docência. [Schema.org affiliation](https://schema.org/affiliation), [Schema.org hasCourse](https://schema.org/hasCourse), [Schema.org author](https://schema.org/author), [SKOS Reference](https://www.w3.org/TR/skos-reference/)
 
 As áreas podem ter ligações com conceitos externos por `skos:exactMatch`, `skos:closeMatch`, `skos:broadMatch`, `skos:narrowMatch` ou `skos:relatedMatch`, geradas a partir de `correspondenciasExternas` no JSON. A ontologia declara essas cinco propriedades SKOS como `owl:ObjectProperty`, sem redefinir domínio ou alcance. Os dados atuais usam três `skos:closeMatch` para itens do Wikidata ([ligações externas](ligacoes-externas.md)). `owl:sameAs` continua fora do modelo.
 
@@ -81,15 +81,15 @@ Os links opcionais `ca:linkAcademico` e `ca:linkBibliografico` partem de `ca:Pes
 | `fontes` | `ca:fonteEditorial` ou `dcterms:source` | Dataset · texto em `pt-BR` para descrição, IRI para fonte identificável |
 | `licenca`, `dataAtualizacao` | `dcterms:license`, `dcterms:modified` | Dataset · IRI de licença e literal `xsd:date`, respectivamente |
 
-As propriedades de dados locais que aceitam texto com idioma têm alcance `rdf:PlainLiteral`. A definição formal de domínio e alcance fica nas propriedades locais. O grafo desta etapa registra a descrição editorial dos exemplos fictícios. A licença e a data de atualização estão ausentes no JSON aprovado. [DCMI Metadata Terms](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/), [Schema.org identifier](https://schema.org/identifier), [SKOS Reference](https://www.w3.org/TR/skos-reference/)
+As propriedades de dados locais que aceitam texto com idioma têm alcance `rdf:PlainLiteral`. A definição formal de domínio e alcance fica nas propriedades locais. O grafo registra a proveniência dos exemplos fictícios, a [licença CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) e a data declarada na [fonte JSON](../exemplos/perfis/dados.json). A instituição de referência contextualiza os registros. [DCMI Metadata Terms](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/), [Schema.org identifier](https://schema.org/identifier), [SKOS Reference](https://www.w3.org/TR/skos-reference/)
 
 ## Axiomas e validação editorial
 
-A ontologia declara classes, hierarquias, subpropriedades, domínios, alcances e anotações. `ca:temUnidadeSuperior` é irreflexiva porque uma unidade não pode ser sua própria superior imediata. Docência e discência são compatíveis. O validador JSON continua verificando formato e unicidade dos IDs, preenchimento, cardinalidades, referências e ausência de ciclos. Em OWL, domínio e alcance permitem inferir tipos. Sob a hipótese de mundo aberto, ausência de uma tripla não implica que o fato seja falso. [OWL 2 Primer](https://www.w3.org/TR/owl2-primer/)
+A ontologia declara classes, hierarquias, subpropriedades, domínios, alcances e anotações. `ca:temUnidadeSuperior` é irreflexiva porque uma unidade não pode ser sua própria superior imediata. Docência e discência são compatíveis. O validador JSON continua verificando formato e unicidade dos IDs, preenchimento, cardinalidades, referências e ausência de ciclos. Em OWL, domínio e alcance permitem inferir tipos. Sob a hipótese de mundo aberto, uma tripla ausente pode representar um fato desconhecido. Cardinalidades editoriais e unicidade dos IDs são verificadas na fonte JSON. [OWL 2 Primer](https://www.w3.org/TR/owl2-primer/)
 
 ## Percursos usados nas consultas
 
-As seis consultas da Etapa 5 estão em [`consultas/`](../consultas/) e são explicadas em [consultas-sparql.md](consultas-sparql.md). Elas usam o [Turtle das instâncias](../ontologia/instancias.ttl) e os percursos abaixo.
+As seis consultas estão em [`consultas/`](../consultas/) e são explicadas em [consultas-sparql.md](consultas-sparql.md). Elas usam o [Turtle das instâncias](../ontologia/instancias.ttl) e os percursos abaixo.
 
 | Pergunta | Percurso no RDF e cuidados |
 | --- | --- |
@@ -102,21 +102,8 @@ As seis consultas da Etapa 5 estão em [`consultas/`](../consultas/) e são expl
 
 Use `schema:name` para pessoas e unidades, `dcterms:title` para projetos e publicações e `skos:prefLabel` para áreas.
 
-## Reprodução local e pendências
+## Modelo conceitual e reprodução
 
-Na raiz do repositório, use um ambiente Python 3.10 ou superior. Os comandos abaixo são para PowerShell.
+O [diagrama conceitual](diagrama-conceitual.svg) representa as entidades e relações R01–R15. O [dicionário](dicionario-dados.md) detalha a estrutura editorial e as cardinalidades. A [pesquisa de vocabulários](pesquisa-vocabularios.md) explica os alinhamentos escolhidos.
 
-```powershell
-python -m venv .venv
-& .\.venv\Scripts\python.exe -m pip install -r requirements-rdf.txt
-& .\.venv\Scripts\python.exe -B codigo-fonte/gerar_rdf.py --publicaveis docs/ontologia
-& .\.venv\Scripts\python.exe -B codigo-fonte/executar_consultas.py
-& .\.venv\Scripts\python.exe -B codigo-fonte/gerar_site.py
-& .\.venv\Scripts\python.exe -B -m unittest discover -s testes -v
-```
-
-O gerador usa o validador editorial já usado pelo site, regrava `ontologia/instancias.ttl` e, com `--publicaveis`, copia a ontologia e as instâncias para `docs/ontologia/`. Edite a ontologia canônica em `ontologia/` e os registros em JSON. O gerador RDF não regrava as páginas HTML. O gerador do site também copia os dois arquivos Turtle para `docs/ontologia/`, junto das consultas e dos resultados usados pela página `dados.html`, por isso deve rodar depois do RDF e das consultas.
-
-Na auditoria da Etapa 4, o RDFLib 7.6.0 leu 193 triplas da ontologia e 202 das instâncias. Na Etapa 5, a declaração das cinco propriedades de mapeamento SKOS e as três ligações externas acrescentaram triplas aos dois arquivos; os testes não fixam essas contagens. A análise OWLAPI/Pellet descrita a seguir foi feita na Etapa 4 e não foi repetida nesta etapa. A OWLAPI 3.4.3 confirmou o perfil OWL 2 DL da ontologia canônica. O Pellet 2.3.1, executado com Owlready2 0.51 e OpenJDK 25, analisou a união dos grafos locais e não encontrou inconsistências ou classes insatisfatíveis. Essa análise usou somente os axiomas locais e as afirmações geradas. As verificações editoriais permanecem no validador JSON.
-
-Pendências para as próximas etapas: decisão sobre a licença do conjunto e publicação no GitHub Pages com verificação da resolução das URIs previstas. As consultas SPARQL e as ligações externas foram implementadas na Etapa 5.
+Edite a ontologia canônica em `ontologia/` e os registros em JSON. O [guia local](execucao-local.md) apresenta a ordem de geração e os testes. O RDF e as páginas geradas são publicados pelo GitHub Pages.

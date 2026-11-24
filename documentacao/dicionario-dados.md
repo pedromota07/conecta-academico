@@ -1,6 +1,6 @@
 # Dicionário de dados · ConectaAcadêmico
 
-O modelo descreve pessoas, vínculos, formação e produção acadêmica do diretório. As cardinalidades são requisitos da fonte estruturada candidata, aplicáveis aos registros de demonstração. As implicações para OWL estão nas [decisões de modelagem](decisoes-modelagem.md).
+O modelo descreve pessoas, vínculos, formação e produção acadêmica do diretório. As cardinalidades são regras da fonte estruturada. As classes e propriedades correspondentes estão na [ontologia de aplicação](ontologia-aplicacao.md).
 
 [Diagrama conceitual em SVG](diagrama-conceitual.svg) · [Fonte editável em Graphviz DOT](diagrama-conceitual.dot)
 

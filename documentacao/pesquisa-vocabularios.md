@@ -1,8 +1,8 @@
 # Pesquisa de ontologias e vocabulários
 
-Foram consultadas especificações e ontologias mantidas pelos projetos, além de buscas no Google e no Google Acadêmico. A atividade da disciplina sobre o slide 50 orientou a comparação de AIISO, VIVO, Univ-Bench, BFO e OBI. As recomendações abaixo são propostas para revisão do trio.
+Foram consultadas especificações e ontologias mantidas pelos projetos, além de buscas no Google e no Google Acadêmico. A comparação considera a semântica de perfis, matrículas, organização acadêmica, autoria e vocabulários temáticos.
 
-## Vocabulários candidatos
+## Vocabulários avaliados
 
 | Vocabulário e finalidade | Termos e aplicação aos perfis | Limitação e recomendação | Fontes primárias |
 | --- | --- | --- | --- |
@@ -23,12 +23,8 @@ Foram consultadas especificações e ontologias mantidas pelos projetos, além d
 
 O Google Acadêmico ajudou a localizar o livro de Börner, Conlon, Corson-Rikert e Ding (2012) sobre VIVO e o artigo de Guo, Pan e Heflin (2005) sobre LUBM. O capítulo sobre a ontologia VIVO orienta a comparação com modelos de perfis de pesquisa. O artigo do LUBM permite distinguir a finalidade do benchmark da finalidade do diretório. [Capítulo sobre VIVO](https://link.springer.com/chapter/10.1007/978-3-031-79435-3_2), [artigo do LUBM](https://swat.cse.lehigh.edu/pubs/guo05a.pdf).
 
-## Recomendação para revisão
+## Escolhas da aplicação
 
-Adotar uma ontologia de aplicação pequena, com Schema.org para descrições de pessoas, afiliações e autoria, DCMI para metadados e SKOS para áreas controladas. Avaliar AIISO para alinhar a estrutura acadêmica, em especial a distinção entre programa e disciplina. As relações necessárias para responder às [perguntas de competência](../proposta/perguntas-competencia.md) devem preservar o significado de matrícula, atuação, participação e autoria. A escolha de termos para programa e disciplina pode privilegiar um dos vocabulários e reservar alinhamentos adicionais para casos demonstráveis.
+A [ontologia de aplicação](ontologia-aplicacao.md) usa Schema.org para pessoas, organizações, afiliação e autoria, AIISO para estrutura acadêmica, DCMI para metadados e SKOS para áreas e mapeamentos conceituais. A ontologia mantém predicados próprios para matrícula, atuação e participação, pois essas relações exigem semântica mais específica.
 
-## Mapeamentos adotados na Etapa 5
-
-As ligações externas foram feitas entre conceitos temáticos, como esta seção recomendava. Três áreas locais receberam `skos:closeMatch` para itens do Wikidata: Web Semântica (Q54837), Dados abertos (Q309901) e Curadoria digital (Q5276060). O Wikidata foi escolhido por publicar URIs estáveis com representação RDF e dados estruturados sob CC0 1.0. `skos:closeMatch` foi preferido a `skos:exactMatch` porque os itens externos são entidades mais gerais do que os termos do vocabulário local e porque a relação não é transitiva. Pessoas e publicações fictícias não foram ligadas. A tabela completa, com fontes e datas, está em [ligacoes-externas.md](ligacoes-externas.md).
-
-O texto a seguir registra as condições definidas antes dessa escolha. O trio ainda precisa validar os termos escolhidos, a licença dos dados e a estratégia de URIs. Para cada uma das pelo menos três ligações futuras, verificar referente, tipo de recurso, acessibilidade pública e significado do predicado. Um mapeamento SKOS depende de conceitos comparáveis. Reservar `owl:sameAs` para identidade comprovada. Pessoas fictícias devem ter identificadores locais e permanecer desvinculadas de identidades reais. As ligações podem ser buscadas entre conceitos temáticos, após verificação.
+O Wikidata disponibiliza URIs estáveis, representação RDF e dados estruturados sob CC0 1.0. Os três mapeamentos usam `skos:closeMatch` porque os conceitos externos têm escopo mais amplo. O [guia de ligações externas](ligacoes-externas.md) apresenta os referentes e as justificativas.

@@ -27,14 +27,7 @@ Este registro usa exclusivamente o enunciado oficial *Trabalho Web Semântica e 
 
 ### Consultas SPARQL (§§ 5–6)
 
-Responder às seis perguntas de competência abaixo, resumidas do enunciado. Para cada uma, apresentar a pergunta em linguagem natural, a consulta SPARQL, o resultado obtido e uma explicação das classes e propriedades utilizadas.
-
-1. Quais docentes estão cadastrados e a quais departamentos ou unidades acadêmicas pertencem?
-2. Quais discentes pertencem a um curso específico?
-3. Quais docentes atuam em uma área de pesquisa específica?
-4. Quais docentes e discentes participam de um mesmo projeto de pesquisa?
-5. Quais publicações estão associadas a um docente e quem são seus coautores, quando o dado estiver representado?
-6. Quais pessoas, docentes ou discentes, estão vinculadas a uma unidade acadêmica específica?
+Responder às [seis perguntas de competência](perguntas-competencia.md). Para cada uma, apresentar a pergunta em linguagem natural, a consulta SPARQL, o resultado e uma explicação das classes e propriedades utilizadas.
 
 Pelo menos duas das seis consultas devem explorar relacionamentos entre tipos distintos de entidades. Se o grupo optar por trabalhar sem endpoint público, deverá fornecer os arquivos RDF e evidências reproduzíveis da execução das consultas em um ambiente compatível.
 
@@ -82,11 +75,3 @@ A nota individual é a nota do entregável multiplicada pelo fator da apresenta�
 - Preparar evidências de Linked Open Data além do endereço do site (§ 6).
 - Na declaração de IA, registrar ferramentas, finalidades, solicitações relevantes ou suas sínteses, partes afetadas e verificações realizadas. Cada integrante deve dominar as decisões e a implementação e estar preparado para explicar ou fazer pequenas alterações no modelo, nos dados e nas consultas (§ 9).
 - Cumprir os requisitos do trabalho mesmo quando forem usadas tecnologias adicionais (§ 12).
-
-## Pendências para decisão do grupo
-
-- Delimitar o público-alvo, as funcionalidades da proposta e os campos por tipo de perfil (§§ 2–3 e 7).
-- Escolher os dados dos novos perfis, verificar as condições de uso das fontes e definir a licença de reutilização (§§ 3–4 e 12).
-- Escolher o formato da fonte estruturada e a tecnologia de geração das páginas (§ 3).
-- Após a pesquisa, decidir quais ontologias, vocabulários e classificações adotar e quais recursos externos ligar aos dados (§ 4).
-- Definir a estratégia de URIs, onde publicar o site e os arquivos e como executar e demonstrar as consultas, com ou sem endpoint público (§§ 4–6).

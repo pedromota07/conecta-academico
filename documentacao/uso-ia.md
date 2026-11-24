@@ -69,3 +69,7 @@ O grupo deve revisar este registro e acrescentar o uso de IA das próximas etapa
 **Ferramenta e finalidade** — OpenAI Codex para revisar e reorganizar o README e o guia local. As capturas foram feitas com Playwright e Microsoft Edge sobre a aplicação publicada.
 
 **Partes afetadas** — README, guia de execução local e duas capturas do catálogo e de uma consulta SPARQL. Na aplicação publicada, foram conferidos o catálogo, a busca, o filtro por papel, a abertura de um perfil e a exibição de uma consulta com resultados.
+
+## Consolidação da documentação técnica
+
+OpenAI Codex apoiou a revisão da proposta, das perguntas de competência, do README e dos guias de modelagem. A solicitação foi reunir decisões vigentes e corrigir instruções desatualizadas, preservando os entregáveis da disciplina. A verificação executou os 89 testes automatizados, regenerou o RDF, os resultados das consultas e o site sem diferenças no Git e conferiu os endereços publicados de páginas e arquivos.

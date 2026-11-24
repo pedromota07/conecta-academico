@@ -40,4 +40,4 @@ O [diagrama SVG](diagrama-conceitual.svg) tem como fonte o [arquivo Graphviz DOT
 dot -Tsvg documentacao/diagrama-conceitual.dot -o documentacao/diagrama-conceitual.svg
 ```
 
-Ao substituir a saída, confira a legibilidade, as relações R01–R15 e os atributos de acessibilidade do SVG versionado. [Dicionário de dados](dicionario-dados.md) · [Decisões de modelagem](decisoes-modelagem.md).
+Ao substituir a saída, confira a legibilidade, as relações R01–R15 e os atributos de acessibilidade do SVG versionado. [Dicionário de dados](dicionario-dados.md) · [Ontologia de aplicação](ontologia-aplicacao.md).
